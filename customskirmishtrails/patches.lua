@@ -28,7 +28,8 @@ local FUNCTION_AOBS = {
   dates = "53 55 56 57 8B 7C 24 14 85 FF 74 05 83 FF 01 75 0A C7 81 8C 1F 00 00 90 33 00 00",
   ainames = "56 57 BF ? ? ? ? BE ? ? ? ? 8D 64 24 00 83 BE 70 FF FF FF FF ? ? ? ? ? ?",
   syncnames = "83 EC 08 53 55 56 57 89 4C 24 14 BE 01 00 00 00 C7 44 24 10 ? ? ? ? BB ? ? ? ? BD ? ? ? ?",
-  lordtype = "8B 44 24 04 83 3C 85 ? ? ? ? FF 75 2F 69 C0 ? ? ? ? 8B 80 ? ? ? ? 83 C0 FE 83 F8 0F",
+  -- stops before +0x1A, where aiSwapper detours the AI part of this function
+  lordtype = "8B 44 24 04 83 3C 85 ? ? ? ? FF 75 2F 69 C0",
   configdefaults = "C7 05 ? ? ? ? 90 33 00 00 C7 05 ? ? ? ? F8 34 00 00 C7 05 ? ? ? ? 60 36 00 00",
 }
 

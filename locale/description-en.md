@@ -91,7 +91,7 @@ Here is a list:
 - text_dexcription_line_01 - 08: Use "" to write text displayed in the skirmish misson start menu
 - trade_: Use e.g. trade_spear (single!) to set trading of that good off or on
 
-## New in 1.3.0 (fork by Monsterfish)
+## New in 1.3 (fork by Monsterfish)
 
 ### Player names and the human player's lord
 Nine optional csv columns, best placed at the end:

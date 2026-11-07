@@ -17,6 +17,10 @@ function csvDataText(id, text) {
 
 function csvDataRequest(action) {
   csvDataPending = { action, request: new Date().toISOString() };
+  for (const id of ['export', 'import']) {
+    const button = document.getElementById(id);
+    if (button) button.classList.toggle('chosen', id === action);
+  }
   const word = action === 'export' ? 'Export' : 'Import';
   csvDataText(
     'pending',

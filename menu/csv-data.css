@@ -1,6 +1,19 @@
+html,
+body {
+  width: 100%;
+  height: 100%;
+  background: #212529;
+  color: whitesmoke;
+  font-family: "River Avenue", serif;
+}
+
 #csv-data {
-  padding: 0.5em 1em;
+  padding: 1em 1.5em;
   line-height: 1.4;
+}
+
+#csv-data p {
+  margin-bottom: 0.6em;
 }
 
 #csv-data .buttons {
@@ -12,6 +25,23 @@
 #csv-data button {
   padding: 0.4em 1.2em;
   cursor: pointer;
+  color: white;
+  background: #3a3f44;
+  border: 1px solid #8a7a5a;
+  font: inherit;
+}
+
+#csv-data button:hover {
+  background: #4a5056;
+}
+
+#csv-data button.chosen {
+  border-color: #e0c070;
+  background: #5a4a2a;
+}
+
+#csv-data #pending {
+  color: #e0c070;
 }
 
 #csv-data #last {

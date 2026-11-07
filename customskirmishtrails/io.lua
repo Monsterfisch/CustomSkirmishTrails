@@ -397,7 +397,10 @@ local function validateInput(input, index)
 
   for name, value in pairs(input) do
     local t = HEADERS_TYPES[name]
-    if t == nil then 
+    if name == "" then
+      -- an unnamed column, from a trailing comma in the header line
+      input[name] = nil
+    elseif t == nil then 
       fail(name, index, "nil", type(value), value)
     else
       local ty = type(value)
