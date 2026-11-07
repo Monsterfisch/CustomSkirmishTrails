@@ -94,9 +94,10 @@ Here is a list:
 ## New in 1.3 (fork by Monsterfish)
 
 ### Player names and the human player's lord
-Nine optional csv columns, best placed at the end:
+Ten optional csv columns, best placed at the end:
 - `player1_name` to `player8_name`: the name a player has in this mission, in the briefing and in the game. Empty keeps the usual human or AI name.
-- `player1_lord`: `Arab` or `Europ` gives the human player the Arabian or the European lord for this mission. Empty keeps the player's own choice.
+- `player1_lord`: `Arab` or `Europ` gives the human player the Arabian or the European lord for this mission. Empty keeps the player's own choice, and the starting troops are the ones of that lord.
+- `player1_skip_start_units`: `1` gives the human player no starting troops in this mission (the lord still comes). Empty or `0` keeps them.
 
 ### Trail settings file
 Each trail can have a trail settings file (a .json file, set in the GUI next to the trail's csv file) with settings for the trail as a whole. `resources/trail-settings.schema.json` describes it and `resources/trails/template-*-settings.json` hold the game's own values. Every entry is optional:

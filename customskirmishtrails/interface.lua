@@ -160,7 +160,7 @@ end
 
 local function commitEntryExtra(entry)
   log(VERBOSE, string.format("commitEntryExtra: %s", entry))
-  log(VERBOSE, string.format("commitEntryExtra: data: %s", json:encode(entry)))
+  -- no json:encode(entry) here: UCP's JSON encoder crashed the game in ucrtbase
 
   -- set somewhere else!
   -- startgoods.setStartGoods(entry)
@@ -173,6 +173,7 @@ local function commitEntryExtra(entry)
 
   patches.applyPlayerNames(entry)
   patches.applyLord(entry)
+  startgoods.skipStartUnits(entry)
 end
 
 local function commitTextDescription(entry)

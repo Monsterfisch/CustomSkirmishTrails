@@ -39,8 +39,26 @@ local function setStartGoods(entry)
   end
 end
 
+-- The map loader writes each player's starting troops as 20 counts (one per unit type) into a
+-- row per player; player 1's row is at memory.STARTING_TROOPS. The game spawns them from there
+-- over the first ticks. The lord is not part of these counts.
+local START_UNIT_TYPES = 20
+
+---player1_skip_start_units = 1: player 1 gets no starting troops (the lord still comes).
+---Called after the loader has filled the rows and before the game spawns them.
+local function skipStartUnits(entry)
+  if entry == nil or tonumber(entry.player1_skip_start_units) ~= 1 then
+    return
+  end
+  for unitType = 0, START_UNIT_TYPES - 1 do
+    core.writeInteger(memory.STARTING_TROOPS + unitType * 4, 0)
+  end
+  log(INFO, "custom-skirmish-trails: player 1 starts without starting troops")
+end
+
 return {
   getStartGood = getStartGood,
   setStartGood = setStartGood,
   setStartGoods = setStartGoods,
+  skipStartUnits = skipStartUnits,
 }
