@@ -6,6 +6,7 @@ local recruitability = require("customskirmishtrails.recruitability")
 local descriptiveTexts = require("customskirmishtrails.descriptive_texts")
 local startgoods = require("customskirmishtrails.start_goods")
 local startgold = require("customskirmishtrails.startgold")
+local patches = require("customskirmishtrails.patches")
 
 -- 
 local function setStartGold(value)
@@ -35,6 +36,30 @@ local PLAYER_MAPPING = {
 local STRING_ADDRESSES = {
 
 }
+
+-- per trail: alias -> AI key, from the trail settings file's ai_character_mapping
+local AI_ALIASES = {}
+
+local function setAiAliases(trail, mapping)
+  local aliases = {}
+  for key, alias in pairs(mapping or {}) do
+    aliases[alias] = key
+  end
+  AI_ALIASES[trail] = aliases
+end
+
+---The game's AI id for a player cell: an AI key ("SK_RAT"), an alias from the trail settings
+---file's ai_character_mapping, or a number (0 for an empty slot).
+local function playerValue(value, trail)
+  if PLAYER_MAPPING[value] ~= nil then
+    return PLAYER_MAPPING[value]
+  end
+  local aliases = AI_ALIASES[trail]
+  if aliases ~= nil and aliases[value] ~= nil and PLAYER_MAPPING[aliases[value]] ~= nil then
+    return PLAYER_MAPPING[aliases[value]]
+  end
+  return math.tointeger(tonumber(value)) or 0
+end
 
 local ENTRY_OFFSETS = {
   ["map_name"] = 0*4,
@@ -122,7 +147,7 @@ local function commitEntry(addr, index, entry, trail)
       local fieldOffset = ENTRY_OFFSETS[name]
       if fieldOffset ~= nil then
         if name:sub(1, ("player"):len()) == "player" then
-          value = PLAYER_MAPPING[value]
+          value = playerValue(value, trail)
         end
         log(2, string.format("commitEntry: %s @ %X: %s", name,offset + fieldOffset, value))
         core.writeInteger(offset + fieldOffset, value)
@@ -145,6 +170,9 @@ local function commitEntryExtra(entry)
   recruitability.setUnitsRecruitable(entry)
 
   tradeability.setTradeables(entry)
+
+  patches.applyPlayerNames(entry)
+  patches.applyLord(entry)
 end
 
 local function commitTextDescription(entry)
@@ -163,5 +191,6 @@ return {
   commitTextDescription = commitTextDescription,
   commitStartGoldDisplay = commitStartGoldDisplay,
   setStartGoods = startgoods.setStartGoods,
+  setAiAliases = setAiAliases,
   STRING_ADDRESSES = STRING_ADDRESSES,
 }

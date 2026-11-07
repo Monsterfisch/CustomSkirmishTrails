@@ -1,31 +1,31 @@
-map_name,fairness,start_levels,num_players,player1,player2,player3,player4,player5,player6,player7,player8,start_position1,start_position2,start_position3,start_position4,start_position5,start_position6,start_position7,start_position8,team1,team2,team3,team4,team5,team6,team7,team8,aiv_type1,aiv_type2,aiv_type3,aiv_type4,aiv_type5,aiv_type6,aiv_type7,aiv_type8,mission_name
-Strati,2,1,2,SK_HUMAN,SK_EMIR,0,0,0,0,0,0,1,2,0,0,0,0,0,0,1,2,0,0,0,0,0,0,0,4,0,0,0,0,0,0,First Step
-Caesarea Swampland,2,1,2,SK_HUMAN,SK_MARSHAL,0,0,0,0,0,0,2,1,0,0,0,0,0,0,1,2,0,0,0,0,0,0,0,8,0,0,0,0,0,0,Muddy Boots
-Thasos,2,1,2,SK_HUMAN,SK_ABBOT,0,0,0,0,0,0,3,4,0,0,0,0,0,0,1,2,0,0,0,0,0,0,0,1,0,0,0,0,0,0,Holy Water
-Tilos,3,1,2,SK_HUMAN,SK_WAZIR,0,0,0,0,0,0,4,7,0,0,0,0,0,0,1,2,0,0,0,0,0,0,0,2,0,0,0,0,0,0,Terror on Tilos
-Reed Sea,3,1,3,SK_HUMAN,SK_MARSHAL,SK_MARSHAL,0,0,0,0,0,5,1,6,0,0,0,0,0,0,1,1,0,0,0,0,0,0,8,4,0,0,0,0,0,Bog War
-Hidden Crater,3,1,3,SK_HUMAN,SK_ABBOT,SK_ABBOT,0,0,0,0,0,5,4,2,0,0,0,0,0,0,1,1,0,0,0,0,0,0,2,1,0,0,0,0,0,Tranquil Getaway
-Trapesac Island,4,1,4,SK_HUMAN,SK_ABBOT,SK_ABBOT,SK_EMIR,0,0,0,0,6,1,3,5,0,0,0,0,0,1,1,1,0,0,0,0,0,3,2,5,0,0,0,0,Battle on the Delta
-Arnon River,4,1,5,SK_HUMAN,SK_EMIR,SK_EMIR,SK_MARSHAL,SK_WAZIR,0,0,0,1,6,5,2,4,0,0,0,1,2,2,1,2,0,0,0,0,6,1,3,4,0,0,0,The Rapids
-Flood plains of Jordan,5,1,3,SK_HUMAN,SK_MARSHAL,SK_ABBOT,0,0,0,0,0,3,4,2,0,0,0,0,0,0,1,1,0,0,0,0,0,0,7,5,5,0,0,0,0,On the Edge
-Halys River,3,1,3,SK_HUMAN,SK_EMIR,SK_EMIR,0,0,0,0,0,1,3,4,0,0,0,0,0,0,1,1,0,0,0,0,0,0,4,2,3,0,0,0,0,Mangonel City
-Dunes of Nicaea,4,3,2,SK_HUMAN,SK_NIZAR,0,0,0,0,0,0,6,2,0,0,0,0,0,0,1,2,0,0,0,0,0,0,0,3,0,0,0,0,0,0,Holy Hole
-Pig in a Poke,3,3,4,SK_HUMAN,SK_EMIR,SK_EMIR,SK_WAZIR,0,0,0,0,1,5,4,3,0,0,0,0,0,1,1,1,0,0,0,0,0,4,7,6,0,0,0,0,Blessed Union
-Drawn and Quartered,4,3,4,SK_HUMAN,SK_EMIR,SK_NIZAR,SK_ABBOT,0,0,0,0,2,6,7,3,0,0,0,0,2,1,1,2,0,0,0,0,0,8,4,5,0,0,0,0,Snaking Stream
-Wall of Iron,5,1,6,SK_HUMAN,SK_WAZIR,SK_NIZAR,SK_EMIR,SK_ABBOT,SK_MARSHAL,0,0,5,3,2,4,6,7,0,0,2,1,1,1,2,2,0,0,0,5,8,1,4,0,0,0,Mirage
-Rock Face,4,1,5,SK_HUMAN,SK_ABBOT,SK_EMIR,SK_WAZIR,SK_EMIR,0,0,0,5,3,2,4,1,0,0,0,1,1,2,2,2,0,0,0,0,4,8,5,2,0,0,0,Thorn Between Roses
-Region of Corinth,5,3,2,SK_HUMAN,SK_EMIR,0,0,0,0,0,0,1,3,0,0,0,0,0,0,1,2,0,0,0,0,0,0,0,3,0,0,0,0,0,0,Twist in the Tale
-Crete Peninsula,3,3,6,SK_HUMAN,SK_WAZIR,SK_MARSHAL,SK_EMIR,SK_ABBOT,SK_SHERIFF,0,0,6,3,2,4,1,5,0,0,1,2,2,2,2,1,0,0,0,2,4,5,4,5,0,0,The Backhander
-Two in a bed,4,3,6,SK_HUMAN,SK_WAZIR,SK_NIZAR,SK_SHERIFF,SK_SHERIFF,SK_EMIR,0,0,2,5,6,3,7,1,0,0,1,2,2,2,2,1,0,0,0,3,2,8,2,6,0,0,We're Surrounded!
-Lake Qaddas,3,3,6,SK_HUMAN,SK_ABBOT,SK_PHILLIP,SK_EMIR,SK_NIZAR,SK_SHERIFF,0,0,1,5,6,3,4,2,0,0,0,1,1,1,1,1,0,0,0,2,2,6,1,5,0,0,Choke Zones
-Great Euphrates,4,3,7,SK_HUMAN,SK_PHILLIP,SK_RICHARD,SK_CALIPH,SK_EMIR,SK_WAZIR,SK_SHERIFF,0,3,1,2,5,6,7,8,0,1,1,1,2,2,2,2,0,0,1,3,3,4,8,6,0,Vantage Point
-Litani and Jordan,4,3,5,SK_HUMAN,SK_WAZIR,SK_NIZAR,SK_FREDERICK,SK_NIZAR,0,0,0,5,1,4,3,2,0,0,0,1,1,2,2,2,0,0,0,0,1,7,3,1,0,0,0,Nobles vs.Scoundrels
-Broken Dune,5,1,5,SK_HUMAN,SK_FREDERICK,SK_PIG,SK_EMIR,SK_NIZAR,0,0,0,1,4,2,3,5,0,0,0,1,1,2,2,2,0,0,0,0,5,2,6,4,0,0,0,Natural Defence
-Lacus Magnus,3,3,6,SK_HUMAN,SK_WAZIR,SK_PIG,SK_SNAKE,SK_NIZAR,SK_ABBOT,0,0,5,2,4,6,3,1,0,0,1,2,2,2,2,1,0,0,0,1,5,5,2,8,0,0,Circle of Enemies
-Craggy Cliffs,4,3,8,SK_HUMAN,SK_WAZIR,SK_WAZIR,SK_NIZAR,SK_EMIR,SK_CALIPH,SK_PIG,SK_SNAKE,2,5,7,8,4,6,3,1,1,2,2,2,2,2,1,1,0,4,4,3,4,1,6,7,Unholy Matrimony
-Dunes of Nicaea,5,3,3,SK_HUMAN,SK_NIZAR,SK_WAZIR,0,0,0,0,0,6,2,5,0,0,0,0,0,0,1,1,0,0,0,0,0,0,3,3,0,0,0,0,0,Mirage with Reinforcements
-Province of Bodrum,4,3,6,SK_HUMAN,SK_WAZIR,SK_NIZAR,SK_NIZAR,SK_NIZAR,SK_WOLF,0,0,2,4,7,1,6,3,0,0,1,2,2,2,2,1,0,0,0,1,2,3,4,3,0,0,Snaking Stream Rematch
-Halys River,4,1,4,SK_HUMAN,SK_EMIR,SK_EMIR,SK_EMIR,0,0,0,0,1,3,4,2,0,0,0,0,0,1,1,1,0,0,0,0,0,5,8,7,0,0,0,0,Wall of Death
-Lakes of Konya,4,3,7,SK_HUMAN,SK_NIZAR,SK_WAZIR,SK_EMIR,SK_SALADIN,SK_PIG,SK_CALIPH,0,3,2,7,4,5,1,6,0,0,1,1,1,2,1,1,0,0,5,4,4,3,8,2,0,Saladin alone
-Coconut Twist,4,3,7,SK_HUMAN,SK_EMIR,SK_EMIR,SK_EMIR,SK_NIZAR,SK_WAZIR,SK_FREDERICK,0,3,6,1,7,2,4,5,0,1,2,2,2,2,2,1,0,0,3,2,7,6,1,7,0,Whirling Death
-Melos,5,3,7,SK_HUMAN,SK_NIZAR,SK_WOLF,SK_EMIR,SK_RICHARD,SK_CALIPH,SK_WAZIR,0,1,3,6,2,7,5,4,0,0,1,1,1,1,1,1,0,0,2,7,3,5,8,4,0,The Big One!
+map_name,fairness,start_levels,num_players,player1,player2,player3,player4,player5,player6,player7,player8,start_position1,start_position2,start_position3,start_position4,start_position5,start_position6,start_position7,start_position8,team1,team2,team3,team4,team5,team6,team7,team8,aiv_type1,aiv_type2,aiv_type3,aiv_type4,aiv_type5,aiv_type6,aiv_type7,aiv_type8,mission_name,player1_name,player2_name,player3_name,player4_name,player5_name,player6_name,player7_name,player8_name,player1_lord
+Strati,2,1,2,SK_HUMAN,SK_EMIR,0,0,0,0,0,0,1,2,0,0,0,0,0,0,1,2,0,0,0,0,0,0,0,4,0,0,0,0,0,0,First Step,,,,,,,,,
+Caesarea Swampland,2,1,2,SK_HUMAN,SK_MARSHAL,0,0,0,0,0,0,2,1,0,0,0,0,0,0,1,2,0,0,0,0,0,0,0,8,0,0,0,0,0,0,Muddy Boots,,,,,,,,,
+Thasos,2,1,2,SK_HUMAN,SK_ABBOT,0,0,0,0,0,0,3,4,0,0,0,0,0,0,1,2,0,0,0,0,0,0,0,1,0,0,0,0,0,0,Holy Water,,,,,,,,,
+Tilos,3,1,2,SK_HUMAN,SK_WAZIR,0,0,0,0,0,0,4,7,0,0,0,0,0,0,1,2,0,0,0,0,0,0,0,2,0,0,0,0,0,0,Terror on Tilos,,,,,,,,,
+Reed Sea,3,1,3,SK_HUMAN,SK_MARSHAL,SK_MARSHAL,0,0,0,0,0,5,1,6,0,0,0,0,0,0,1,1,0,0,0,0,0,0,8,4,0,0,0,0,0,Bog War,,,,,,,,,
+Hidden Crater,3,1,3,SK_HUMAN,SK_ABBOT,SK_ABBOT,0,0,0,0,0,5,4,2,0,0,0,0,0,0,1,1,0,0,0,0,0,0,2,1,0,0,0,0,0,Tranquil Getaway,,,,,,,,,
+Trapesac Island,4,1,4,SK_HUMAN,SK_ABBOT,SK_ABBOT,SK_EMIR,0,0,0,0,6,1,3,5,0,0,0,0,0,1,1,1,0,0,0,0,0,3,2,5,0,0,0,0,Battle on the Delta,,,,,,,,,
+Arnon River,4,1,5,SK_HUMAN,SK_EMIR,SK_EMIR,SK_MARSHAL,SK_WAZIR,0,0,0,1,6,5,2,4,0,0,0,1,2,2,1,2,0,0,0,0,6,1,3,4,0,0,0,The Rapids,,,,,,,,,
+Flood plains of Jordan,5,1,3,SK_HUMAN,SK_MARSHAL,SK_ABBOT,0,0,0,0,0,3,4,2,0,0,0,0,0,0,1,1,0,0,0,0,0,0,7,5,5,0,0,0,0,On the Edge,,,,,,,,,
+Halys River,3,1,3,SK_HUMAN,SK_EMIR,SK_EMIR,0,0,0,0,0,1,3,4,0,0,0,0,0,0,1,1,0,0,0,0,0,0,4,2,3,0,0,0,0,Mangonel City,,,,,,,,,
+Dunes of Nicaea,4,3,2,SK_HUMAN,SK_NIZAR,0,0,0,0,0,0,6,2,0,0,0,0,0,0,1,2,0,0,0,0,0,0,0,3,0,0,0,0,0,0,Holy Hole,,,,,,,,,
+Pig in a Poke,3,3,4,SK_HUMAN,SK_EMIR,SK_EMIR,SK_WAZIR,0,0,0,0,1,5,4,3,0,0,0,0,0,1,1,1,0,0,0,0,0,4,7,6,0,0,0,0,Blessed Union,,,,,,,,,
+Drawn and Quartered,4,3,4,SK_HUMAN,SK_EMIR,SK_NIZAR,SK_ABBOT,0,0,0,0,2,6,7,3,0,0,0,0,2,1,1,2,0,0,0,0,0,8,4,5,0,0,0,0,Snaking Stream,,,,,,,,,
+Wall of Iron,5,1,6,SK_HUMAN,SK_WAZIR,SK_NIZAR,SK_EMIR,SK_ABBOT,SK_MARSHAL,0,0,5,3,2,4,6,7,0,0,2,1,1,1,2,2,0,0,0,5,8,1,4,0,0,0,Mirage,,,,,,,,,
+Rock Face,4,1,5,SK_HUMAN,SK_ABBOT,SK_EMIR,SK_WAZIR,SK_EMIR,0,0,0,5,3,2,4,1,0,0,0,1,1,2,2,2,0,0,0,0,4,8,5,2,0,0,0,Thorn Between Roses,,,,,,,,,
+Region of Corinth,5,3,2,SK_HUMAN,SK_EMIR,0,0,0,0,0,0,1,3,0,0,0,0,0,0,1,2,0,0,0,0,0,0,0,3,0,0,0,0,0,0,Twist in the Tale,,,,,,,,,
+Crete Peninsula,3,3,6,SK_HUMAN,SK_WAZIR,SK_MARSHAL,SK_EMIR,SK_ABBOT,SK_SHERIFF,0,0,6,3,2,4,1,5,0,0,1,2,2,2,2,1,0,0,0,2,4,5,4,5,0,0,The Backhander,,,,,,,,,
+Two in a bed,4,3,6,SK_HUMAN,SK_WAZIR,SK_NIZAR,SK_SHERIFF,SK_SHERIFF,SK_EMIR,0,0,2,5,6,3,7,1,0,0,1,2,2,2,2,1,0,0,0,3,2,8,2,6,0,0,We're Surrounded!,,,,,,,,,
+Lake Qaddas,3,3,6,SK_HUMAN,SK_ABBOT,SK_PHILLIP,SK_EMIR,SK_NIZAR,SK_SHERIFF,0,0,1,5,6,3,4,2,0,0,0,1,1,1,1,1,0,0,0,2,2,6,1,5,0,0,Choke Zones,,,,,,,,,
+Great Euphrates,4,3,7,SK_HUMAN,SK_PHILLIP,SK_RICHARD,SK_CALIPH,SK_EMIR,SK_WAZIR,SK_SHERIFF,0,3,1,2,5,6,7,8,0,1,1,1,2,2,2,2,0,0,1,3,3,4,8,6,0,Vantage Point,,,,,,,,,
+Litani and Jordan,4,3,5,SK_HUMAN,SK_WAZIR,SK_NIZAR,SK_FREDERICK,SK_NIZAR,0,0,0,5,1,4,3,2,0,0,0,1,1,2,2,2,0,0,0,0,1,7,3,1,0,0,0,Nobles vs.Scoundrels,,,,,,,,,
+Broken Dune,5,1,5,SK_HUMAN,SK_FREDERICK,SK_PIG,SK_EMIR,SK_NIZAR,0,0,0,1,4,2,3,5,0,0,0,1,1,2,2,2,0,0,0,0,5,2,6,4,0,0,0,Natural Defence,,,,,,,,,
+Lacus Magnus,3,3,6,SK_HUMAN,SK_WAZIR,SK_PIG,SK_SNAKE,SK_NIZAR,SK_ABBOT,0,0,5,2,4,6,3,1,0,0,1,2,2,2,2,1,0,0,0,1,5,5,2,8,0,0,Circle of Enemies,,,,,,,,,
+Craggy Cliffs,4,3,8,SK_HUMAN,SK_WAZIR,SK_WAZIR,SK_NIZAR,SK_EMIR,SK_CALIPH,SK_PIG,SK_SNAKE,2,5,7,8,4,6,3,1,1,2,2,2,2,2,1,1,0,4,4,3,4,1,6,7,Unholy Matrimony,,,,,,,,,
+Dunes of Nicaea,5,3,3,SK_HUMAN,SK_NIZAR,SK_WAZIR,0,0,0,0,0,6,2,5,0,0,0,0,0,0,1,1,0,0,0,0,0,0,3,3,0,0,0,0,0,Mirage with Reinforcements,,,,,,,,,
+Province of Bodrum,4,3,6,SK_HUMAN,SK_WAZIR,SK_NIZAR,SK_NIZAR,SK_NIZAR,SK_WOLF,0,0,2,4,7,1,6,3,0,0,1,2,2,2,2,1,0,0,0,1,2,3,4,3,0,0,Snaking Stream Rematch,,,,,,,,,
+Halys River,4,1,4,SK_HUMAN,SK_EMIR,SK_EMIR,SK_EMIR,0,0,0,0,1,3,4,2,0,0,0,0,0,1,1,1,0,0,0,0,0,5,8,7,0,0,0,0,Wall of Death,,,,,,,,,
+Lakes of Konya,4,3,7,SK_HUMAN,SK_NIZAR,SK_WAZIR,SK_EMIR,SK_SALADIN,SK_PIG,SK_CALIPH,0,3,2,7,4,5,1,6,0,0,1,1,1,2,1,1,0,0,5,4,4,3,8,2,0,Saladin alone,,,,,,,,,
+Coconut Twist,4,3,7,SK_HUMAN,SK_EMIR,SK_EMIR,SK_EMIR,SK_NIZAR,SK_WAZIR,SK_FREDERICK,0,3,6,1,7,2,4,5,0,1,2,2,2,2,2,1,0,0,3,2,7,6,1,7,0,Whirling Death,,,,,,,,,
+Melos,5,3,7,SK_HUMAN,SK_NIZAR,SK_WOLF,SK_EMIR,SK_RICHARD,SK_CALIPH,SK_WAZIR,0,1,3,6,2,7,5,4,0,0,1,1,1,1,1,1,0,0,2,7,3,5,8,4,0,The Big One!,,,,,,,,,

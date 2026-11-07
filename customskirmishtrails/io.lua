@@ -124,6 +124,15 @@ local HEADERS_EXTRA = {
   "gold_player_6",
   "gold_player_7",
   "gold_player_8",
+  "player1_name",
+  "player2_name",
+  "player3_name",
+  "player4_name",
+  "player5_name",
+  "player6_name",
+  "player7_name",
+  "player8_name",
+  "player1_lord",
 }
 
 ---@alias binary 0|1
@@ -243,9 +252,27 @@ local HEADERS_TYPES = {
   ["gold_player_6"] = "integer",
   ["gold_player_7"] = "integer",
   ["gold_player_8"] = "integer",
+  ["player1_name"] = "string",
+  ["player2_name"] = "string",
+  ["player3_name"] = "string",
+  ["player4_name"] = "string",
+  ["player5_name"] = "string",
+  ["player6_name"] = "string",
+  ["player7_name"] = "string",
+  ["player8_name"] = "string",
+  ["player1_lord"] = "string",
 }
 
 local ALLOW_NIL = {
+  ["player1_name"] = true,
+  ["player2_name"] = true,
+  ["player3_name"] = true,
+  ["player4_name"] = true,
+  ["player5_name"] = true,
+  ["player6_name"] = true,
+  ["player7_name"] = true,
+  ["player8_name"] = true,
+  ["player1_lord"] = true,
   ["gold_player_1"] = true,
   ["gold_player_2"] = true,
   ["gold_player_3"] = true,

@@ -1,0 +1,95 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://github.com/Monsterfisch/CustomSkirmishTrails/resources/trail-settings.schema.json",
+  "title": "Custom Skirmish Trails: trail settings",
+  "description": "Settings for one skirmish trail as a whole. Every entry is optional; a missing or empty entry keeps the game's own value. Relative file paths are taken from the folder of this file.",
+  "type": "object",
+  "properties": {
+    "$schema": { "type": "string" },
+    "trail_type": {
+      "description": "The trail these settings are for. The file is ignored when it is set for another trail in the UCP GUI.",
+      "type": "string",
+      "enum": ["First", "Warchest", "Extreme"]
+    },
+    "trail_title": {
+      "description": "The trail's title under its button in the skirmish menu.",
+      "type": "string"
+    },
+    "trail_summary": {
+      "description": "The short description under the title in the skirmish menu.",
+      "type": "string"
+    },
+    "starting_year": {
+      "description": "The year the trail's first mission starts in. The game uses 1100 for the first trail and 1130 for the Warchest and the Extreme trail.",
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 9999
+    },
+    "trail_visuals": {
+      "description": "Pictures that replace the game's own for this trail.",
+      "type": "object",
+      "properties": {
+        "trail_button_idle": {
+          "description": "Picture file (for example .png) for the trail's button in the skirmish menu. Stronghold Crusader has buttons for the first and the Warchest trail (interface_icons2.gm1), Crusader Extreme for the Extreme trail (interface_icons3.gm1).",
+          "type": "string"
+        },
+        "trail_button_highlighted": {
+          "description": "Picture file for the button while the mouse is over it.",
+          "type": "string"
+        },
+        "trail_background": {
+          "description": "A .tgx file for the trail screen's background, in place of skirmish_trail.tgx, skirmish_trail2.tgx or SHCX_Map.tgx.",
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "trail_mission_positions": {
+      "description": "Where each mission's button sits on the trail screen (800 x 600; a click within 10 pixels of the point counts). The number of positions is the number of missions: at most 50 for the first trail and 30 for the Warchest and the Extreme trail. The game reads that many lines from the trail's csv file.",
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 50,
+      "items": {
+        "type": "object",
+        "properties": {
+          "x": { "type": "integer", "minimum": 0, "maximum": 800 },
+          "y": { "type": "integer", "minimum": 0, "maximum": 600 }
+        },
+        "required": ["x", "y"],
+        "additionalProperties": false
+      }
+    },
+    "trail_csv_files": {
+      "description": "The trail's csv file per game language, for example \"english\", \"german\", \"french\". \"default\" is used for every other language. When this is given, it takes the place of the csv files set in the UCP GUI.",
+      "type": "object",
+      "properties": {
+        "default": { "type": "string" }
+      },
+      "additionalProperties": { "type": "string" }
+    },
+    "ai_character_mapping": {
+      "description": "Names for the AI keys of the csv columns player1 to player8. Export CSV Data writes these names into the mission JSON files and Import CSV Data turns them back into the keys. The csv file may use them too. Each name must be unique and must not be another AI's key.",
+      "type": "object",
+      "properties": {
+        "SK_RAT": { "type": "string" },
+        "SK_SNAKE": { "type": "string" },
+        "SK_PIG": { "type": "string" },
+        "SK_WOLF": { "type": "string" },
+        "SK_SALADIN": { "type": "string" },
+        "SK_CALIPH": { "type": "string" },
+        "SK_SULTAN": { "type": "string" },
+        "SK_RICHARD": { "type": "string" },
+        "SK_FREDERICK": { "type": "string" },
+        "SK_PHILLIP": { "type": "string" },
+        "SK_WAZIR": { "type": "string" },
+        "SK_EMIR": { "type": "string" },
+        "SK_NIZAR": { "type": "string" },
+        "SK_SHERIFF": { "type": "string" },
+        "SK_MARSHAL": { "type": "string" },
+        "SK_ABBOT": { "type": "string" }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

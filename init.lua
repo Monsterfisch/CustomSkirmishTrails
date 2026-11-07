@@ -10,11 +10,35 @@ local producibility = require("customskirmishtrails.producibility")
 local recruitability = require("customskirmishtrails.recruitability")
 local startgold = require("customskirmishtrails.startgold")
 local start_goods = require("customskirmishtrails.start_goods")
+local patches = require("customskirmishtrails.patches")
+local settingsModule = require("customskirmishtrails.settings")
+local visuals = require("customskirmishtrails.visuals")
+local conversion = require("customskirmishtrails.conversion")
 
-local TRAIL_TYPES = memory.TRAIL_TYPES
 local TRAIL_PROGRESS_ADDRESSES = memory.TRAIL_PROGRESS_ADDRESSES
 local REGISTRY = memory.REGISTRY
 local fetchCurrentTrail = memory.fetchCurrentTrail
+
+-- The three trails: their name in this module, their key in the GUI config and their
+-- trail_type in trail settings files.
+local TRAILS = {
+  { name = "firstEditionTrail", key = "firstedition", type = "First" },
+  { name = "warchestTrail", key = "warchest", type = "Warchest" },
+  { name = "extremeTrail", key = "extremetrail", type = "Extreme" },
+}
+
+local REQUESTS_FILE = "ucp/.cache/custom-skirmish-trails-requests.json"
+
+---The mission entry of the trail mission being prepared or played (or nil), and whether the
+---game is in a trail mission.
+local function currentEntry()
+  local ok, isTrail, _, trailName, mission = pcall(fetchCurrentTrail)
+  if not ok or trailName == nil then
+    return nil, false
+  end
+  local missions = REGISTRY[trailName]
+  return missions ~= nil and missions[mission] or nil, isTrail
+end
 
 local function insertPostSkirmishSetupDetour()
   log(2, "insertPostSkirmishSetupDetour: setting up detour")
@@ -30,7 +54,7 @@ local function insertPostSkirmishSetupDetour()
     if trailName == nil then error(string.format("invalid trail: %s", trail)) end
 
     log(2, string.format("trail: %s", trailName))
-    
+
     local missions = REGISTRY[trailName]
     if missions == nil then
       log(2, string.format("No custom missions registered for trail name: %s", trailName))
@@ -38,9 +62,12 @@ local function insertPostSkirmishSetupDetour()
     end
 
     log(2, string.format("Committing extra parameters for %s mission: %s", trailName, mission))
-    
+
     local entry = missions[mission]
-    if entry == nil then log(-1, string.format("skirmish trail (%s) entry is unexpectedly nil: %s", trailName, mission)) end
+    if entry == nil then
+      log(-1, string.format("skirmish trail (%s) entry is unexpectedly nil: %s", trailName, mission))
+      return registers
+    end
     interface.commitEntryExtra(entry)
 
     return registers
@@ -59,9 +86,12 @@ local function insertPostSkirmishSetupDetour()
     end
 
     log(2, string.format("Committing start goods parameters for %s mission: %s", trailName, mission))
-    
+
     local entry = missions[mission]
-    if entry == nil then log(-1, string.format("skirmish trail (%s) entry is unexpectedly nil: %s", trailName, mission)) end
+    if entry == nil then
+      log(-1, string.format("skirmish trail (%s) entry is unexpectedly nil: %s", trailName, mission))
+      return registers
+    end
     interface.setStartGoods(entry)
   end, core.AOBScan("A3 ? ? ? ? A3 ? ? ? ? A3 ? ? ? ? A3 ? ? ? ? A3 ? ? ? ? A3 ? ? ? ? A3 ? ? ? ? A3 ? ? ? ? A3 ? ? ? ? A3 ? ? ? ? A3 ? ? ? ? A3 ? ? ? ? A3 ? ? ? ? A3 ? ? ? ? 89 44 24 10 "), 5)
 end
@@ -69,13 +99,15 @@ end
 local function applyTrail(trailName, path, missions, limit)
   local result, err = cst_io.readCSV(path, limit + 1) -- one for the header
   if result == nil then error(err) end
-  
+
   local f = io.open(string.format("ucp/.cache/custom-skirmish-trails-config-%s.yml", trailName), 'w')
-  f:write(yaml.dump(result))
-  f:close()
+  if f ~= nil then
+    f:write(yaml.dump(result))
+    f:close()
+  end
 
   REGISTRY[trailName] = result
-  
+
   for index, entry in pairs(REGISTRY[trailName]) do
     interface.commitEntry(missions, index, entry, trailName)
   end
@@ -91,45 +123,242 @@ local function detourSwitchToMenu()
       local missions = REGISTRY[trailName]
       if missions == nil then
         log(VERBOSE, string.format("No custom missions registered for trail name: %s", trailName))
+        patches.applyLord(nil)
         return registers
       end
 
       local entry = missions[mission]
-      if entry == nil then log(-1, string.format("skirmish trail (%s) entry is unexpectedly nil: %s", trailName, mission)) end
-      
+      if entry == nil then
+        log(-1, string.format("skirmish trail (%s) entry is unexpectedly nil: %s", trailName, mission))
+        patches.applyLord(nil)
+        return registers
+      end
+
       interface.commitTextDescription(entry)
       interface.commitStartGoldDisplay(entry)
-      
+      patches.applyLord(entry)
+
     else
       log(2, "detourSwitchMenu: no text description to set")
     end
   end, core.AOBScan("C7 ? ? ? ? ? ? ? ? ? ? E8 ? ? ? ? 5D C3"), 11)
 end
 
+---Player names and the human player's lord: every time the game names its players (for a
+---trail mission's briefing and when a map starts), a trail mission puts its own in.
+local function hookPlayerNaming()
+  patches.hookPlayerNaming(function(isTrailBriefing)
+    local entry, isTrail = currentEntry()
+    if isTrailBriefing or isTrail then
+      patches.applyPlayerNames(entry)
+      patches.applyLord(entry)
+    else
+      patches.applyLord(nil)
+    end
+  end)
+end
+
+-- Settings -------------------------------------------------------------------------------
+
+local function nonEmpty(value)
+  return type(value) == "string" and value ~= ""
+end
+
+local function trailConfig(config, trail)
+  return type(config[trail.key]) == "table" and config[trail.key] or {}
+end
+
+---The default csv file and the language csv files set in the GUI for a trail.
+local function guiCsv(config, trail)
+  local csv = trailConfig(config, trail).csv
+  if type(csv) ~= "table" then
+    return nil, {}
+  end
+  local languages = {}
+  if type(csv.languages) == "table" then
+    for language, path in pairs(csv.languages) do
+      if nonEmpty(path) then
+        languages[tostring(language):lower()] = path
+      end
+    end
+  end
+  return nonEmpty(csv.path) and csv.path or nil, languages
+end
+
+local function loadTrailSettings(config, trail)
+  local settingsConfig = trailConfig(config, trail).settings
+  local path = type(settingsConfig) == "table" and settingsConfig.path or nil
+  if not nonEmpty(path) then
+    return nil
+  end
+  local ok, result = pcall(settingsModule.load, path, trail.name)
+  if not ok then
+    log(WARNING, string.format("custom-skirmish-trails: %s: %s", path, tostring(result)))
+    return nil
+  end
+  if result ~= nil then
+    log(INFO, string.format("custom-skirmish-trails: %s trail settings from %s", trail.type, path))
+  end
+  return result
+end
+
+-- Export / Import requests from the GUI ------------------------------------------------------
+
+local function readRequests()
+  local handle = io.open(REQUESTS_FILE, "rb")
+  if handle == nil then
+    return {}
+  end
+  local text = handle:read("*all")
+  handle:close()
+  local ok, data = pcall(function() return json:decode(text) end)
+  return (ok and type(data) == "table") and data or {}
+end
+
+local function writeRequests(requests)
+  local handle = io.open(REQUESTS_FILE, "wb")
+  if handle == nil then
+    log(WARNING, "custom-skirmish-trails: cannot write " .. REQUESTS_FILE)
+    return
+  end
+  handle:write(json:encode_pretty(requests))
+  handle:close()
+end
+
+local function knownHeaders()
+  local headers = {}
+  for _, header in ipairs(cst_io.HEADERS) do table.insert(headers, header) end
+  for _, header in ipairs(cst_io.HEADERS_EXTRA) do table.insert(headers, header) end
+  return headers
+end
+
+---Runs an Export or Import CSV Data request the GUI saved, once per request.
+local function runConversions(config, trailSettings)
+  local requests = nil
+  for _, trail in ipairs(TRAILS) do
+    local request = trailConfig(config, trail).conversion
+    if type(request) == "table" and (request.action == "export" or request.action == "import")
+      and nonEmpty(request.request) then
+      requests = requests or readRequests()
+      local previous = requests[trail.key]
+      if type(previous) ~= "table" or previous.request ~= request.request then
+        local settings = trailSettings[trail.name]
+        local mapping = (settings ~= nil and settings.hasAiMapping) and settings.aiMapping or nil
+        local default, languages = guiCsv(config, trail)
+        local files = settingsModule.allCsvFiles(settings, languages, default)
+        local results = {}
+        if #files == 0 then
+          table.insert(results, "no csv file is set for this trail")
+        end
+        for _, file in ipairs(files) do
+          local ok, done, message
+          if request.action == "export" then
+            ok, done, message = pcall(conversion.export, file, mapping)
+          else
+            ok, done, message = pcall(conversion.import, file, mapping, knownHeaders())
+          end
+          if not ok then
+            message = string.format("%s: %s", file, tostring(done))
+          end
+          log((ok and done) and INFO or WARNING, "custom-skirmish-trails: " .. tostring(message))
+          table.insert(results, tostring(message))
+        end
+        requests[trail.key] = {
+          action = request.action,
+          request = request.request,
+          time = os.date("%Y-%m-%d %H:%M:%S"),
+          results = results,
+        }
+      end
+    end
+  end
+  if requests ~= nil then
+    writeRequests(requests)
+  end
+end
+
 return {
   enable = function(self, config)
-    if config.csv.strict_format == true then
+    config = config or {}
+    if type(config.csv) == "table" and config.csv.strict_format == true then
       cst_io.setStrictness("error")
     else
       cst_io.setStrictness("warning")
     end
 
     local _, skirmishTrailMissions, extremeTrailMissions, warchestTrailMissions = utils.AOBExtract("8D ? I(? ? ? ?) 75 08 8D ? I(? ? ? ?) EB 0B 83 F9 01 75 06 8D ? I(? ? ? ?) 53")
+    local missionTables = {
+      firstEditionTrail = skirmishTrailMissions,
+      warchestTrail = warchestTrailMissions,
+      extremeTrail = extremeTrailMissions,
+    }
+
+    -- trail settings files: mission count and positions, start years, texts, visuals
+    local trailSettings = {}
+    local missionCounts = {}
+    local startYears = {}
+    for _, trail in ipairs(TRAILS) do
+      local settings = loadTrailSettings(config, trail)
+      trailSettings[trail.name] = settings
+      missionCounts[trail.name] = patches.VANILLA_COUNT[trail.name]
+
+      if settings ~= nil then
+        if settings.positions ~= nil then
+          local count = #settings.positions
+          if trail.name == "extremeTrail" and count > patches.VANILLA_COUNT.extremeTrail then
+            local grown = patches.growExtremeTable(missionTables.extremeTrail, patches.CAPACITY.extremeTrail)
+            if grown == missionTables.extremeTrail then
+              count = patches.VANILLA_COUNT.extremeTrail -- the table could not move
+            end
+            missionTables.extremeTrail = grown
+          end
+          if count == patches.VANILLA_COUNT[trail.name] or patches.setMissionCount(trail.name, count) then
+            missionCounts[trail.name] = count
+          end
+          -- Extreme missions past the game's 20 have no name in the game's texts; a csv
+          -- line's mission_name replaces this one
+          for index = patches.VANILLA_COUNT[trail.name] + 1, missionCounts[trail.name] do
+            modules.textResourceModifier:SetText(0xF5, 0x51 + (index - 1), string.format("Mission %d", index))
+          end
+          local positions = {}
+          for index = 1, math.min(missionCounts[trail.name], #settings.positions) do
+            positions[index] = settings.positions[index]
+          end
+          patches.setPositions(trail.name, positions)
+        end
+        startYears[trail.name] = settings.startingYear
+        visuals.applyTexts(trail.name, settings.title, settings.summary)
+        visuals.applyVisuals(trail.name, settings.visuals)
+        if settings.hasAiMapping then
+          interface.setAiAliases(trail.name, settings.aiMapping)
+        end
+      end
+    end
+    patches.setStartYears(startYears)
+
+    -- Export / Import CSV Data requested in the GUI
+    local ok, err = pcall(runConversions, config, trailSettings)
+    if not ok then
+      log(WARNING, "custom-skirmish-trails: Export / Import CSV Data: " .. tostring(err))
+    end
 
     hooks.registerHookCallback("afterInit", function()
-      local extremePath = config.extremetrail.csv.path
-      if extremePath and extremePath ~= "" then
-        applyTrail("extremeTrail", extremePath, extremeTrailMissions, 20)
+      local language = ""
+      local texts = modules.textResourceModifier
+      if texts ~= nil and texts.GetLanguage ~= nil then
+        local gotLanguage, value = pcall(function() return texts:GetLanguage() end)
+        if gotLanguage and type(value) == "string" then
+          language = value:lower()
+        end
       end
 
-      local firsteditionPath = config.firstedition.csv.path
-      if firsteditionPath and firsteditionPath ~= "" then
-        applyTrail("firstEditionTrail", firsteditionPath, skirmishTrailMissions, 50)
-      end
-
-      local warchestPath = config.warchest.csv.path
-      if warchestPath and warchestPath ~= "" then
-        applyTrail("warchestTrail", warchestPath, warchestTrailMissions, 30) -- todo: check
+      for _, trail in ipairs(TRAILS) do
+        local default, languages = guiCsv(config, trail)
+        local path = settingsModule.chooseCsv(trailSettings[trail.name], languages, default, language)
+        if nonEmpty(path) then
+          log(INFO, string.format("custom-skirmish-trails: %s trail (%s): %s", trail.type, language, path))
+          applyTrail(trail.name, path, missionTables[trail.name], missionCounts[trail.name])
+        end
       end
 
       self.REGISTRY = REGISTRY -- debug line
@@ -152,14 +381,15 @@ return {
     --   local entry = REGISTRY.extremeTrail[mission]
     --   -- todo
     -- end, core.AOBScan("83 C2 51 52", 9))
-    
+
     log(2, "enable description hijack")
     description.enable()
     tradeability.enable()
     producibility.enable()
     startgold.enable()
-    
+
     detourSwitchToMenu()
+    hookPlayerNaming()
   end,
   disable = function(self, config) end,
   getTrailProgress = function(self, trail)
@@ -168,7 +398,7 @@ return {
     if progressAddr == nil then
       error(string.format("no such trail: %s", trail))
     end
-    
+
     return core.readInteger(progressAddr)
   end,
   setTrailProgress = function(self, trail, progress)
@@ -177,7 +407,7 @@ return {
     if progressAddr == nil then
       error(string.format("no such trail: %s", trail))
     end
-    
+
     core.writeInteger(progressAddr, progress)
   end,
   setText = function(self, line, text)

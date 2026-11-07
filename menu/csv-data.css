@@ -1,0 +1,20 @@
+#csv-data {
+  padding: 0.5em 1em;
+  line-height: 1.4;
+}
+
+#csv-data .buttons {
+  display: flex;
+  gap: 1em;
+  margin: 1em 0;
+}
+
+#csv-data button {
+  padding: 0.4em 1.2em;
+  cursor: pointer;
+}
+
+#csv-data #last {
+  white-space: pre-wrap;
+  opacity: 0.85;
+}

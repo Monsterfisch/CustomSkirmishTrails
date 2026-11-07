@@ -1,49 +1,479 @@
-meta:
-  version: 1.0.0
 options:
 - category:
   - Custom Skirmish Trails
-  name: extreme
-  header: "First Edition Trail" # '{{extreme}}'
-  text: "Customize the first trail with a .csv file" # '{{extreme_descr}}'
-  display: FileInput
-  url: custom-skirmish-trails.firstedition.csv.path
-  contents:
-    generalizeExtensionPaths: true
-    filter: files
-    type: string
-    value: ''
+  name: firstedition
+  display: GroupBox
+  header: "First Edition Trail"
+  text: "Customize the first trail"
+  hasHeader: true
+  children:
+  - name: csv
+    header: "First Edition Trail"
+    text: "Customize the first trail with a .csv file. It is used for every game language that has no file of its own below."
+    display: FileInput
+    url: custom-skirmish-trails.firstedition.csv.path
+    contents:
+      generalizeExtensionPaths: true
+      filter: files
+      type: string
+      value: ''
+  - name: settings
+    header: "Trail settings file"
+    text: "A .json file with settings for the first trail as a whole: title, summary, starting year, button pictures, background, mission positions, csv files per language and AI names (see trail-settings.schema.json). Leave empty to keep the game's own."
+    display: FileInput
+    url: custom-skirmish-trails.firstedition.settings.path
+    contents:
+      generalizeExtensionPaths: true
+      filter: files
+      type: string
+      value: ''
+  - name: conversion
+    header: "CSV data"
+    text: "Export the first trail's csv files to one JSON file per mission, or import those JSON files back into the csv files"
+    hasHeader: true
+    display: CustomMenu
+    url: custom-skirmish-trails.firstedition.conversion
+    contents:
+      type: custom
+      source:
+        html: csv-data-firstedition.html
+        css: csv-data.css
+        js: csv-data.js
+  - name: languages
+    display: GroupBox
+    header: "Csv files per game language"
+    text: "A .csv file for one game language takes the place of the file above when the game runs in that language. A trail settings file with trail_csv_files overrides these."
+    hasHeader: true
+    children:
+    - name: english
+      header: "English"
+      text: "The first trail csv file for the English game"
+      display: FileInput
+      url: custom-skirmish-trails.firstedition.csv.languages.english
+      contents:
+        generalizeExtensionPaths: true
+        filter: files
+        type: string
+        value: ''
+    - name: german
+      header: "German"
+      text: "The first trail csv file for the German game"
+      display: FileInput
+      url: custom-skirmish-trails.firstedition.csv.languages.german
+      contents:
+        generalizeExtensionPaths: true
+        filter: files
+        type: string
+        value: ''
+    - name: french
+      header: "French"
+      text: "The first trail csv file for the French game"
+      display: FileInput
+      url: custom-skirmish-trails.firstedition.csv.languages.french
+      contents:
+        generalizeExtensionPaths: true
+        filter: files
+        type: string
+        value: ''
+    - name: spanish
+      header: "Spanish"
+      text: "The first trail csv file for the Spanish game"
+      display: FileInput
+      url: custom-skirmish-trails.firstedition.csv.languages.spanish
+      contents:
+        generalizeExtensionPaths: true
+        filter: files
+        type: string
+        value: ''
+    - name: italian
+      header: "Italian"
+      text: "The first trail csv file for the Italian game"
+      display: FileInput
+      url: custom-skirmish-trails.firstedition.csv.languages.italian
+      contents:
+        generalizeExtensionPaths: true
+        filter: files
+        type: string
+        value: ''
+    - name: polish
+      header: "Polish"
+      text: "The first trail csv file for the Polish game"
+      display: FileInput
+      url: custom-skirmish-trails.firstedition.csv.languages.polish
+      contents:
+        generalizeExtensionPaths: true
+        filter: files
+        type: string
+        value: ''
+    - name: russian
+      header: "Russian"
+      text: "The first trail csv file for the Russian game"
+      display: FileInput
+      url: custom-skirmish-trails.firstedition.csv.languages.russian
+      contents:
+        generalizeExtensionPaths: true
+        filter: files
+        type: string
+        value: ''
+    - name: hungarian
+      header: "Hungarian"
+      text: "The first trail csv file for the Hungarian game"
+      display: FileInput
+      url: custom-skirmish-trails.firstedition.csv.languages.hungarian
+      contents:
+        generalizeExtensionPaths: true
+        filter: files
+        type: string
+        value: ''
+    - name: turkish
+      header: "Turkish"
+      text: "The first trail csv file for the Turkish game"
+      display: FileInput
+      url: custom-skirmish-trails.firstedition.csv.languages.turkish
+      contents:
+        generalizeExtensionPaths: true
+        filter: files
+        type: string
+        value: ''
+    - name: chinese
+      header: "Chinese"
+      text: "The first trail csv file for the Chinese game"
+      display: FileInput
+      url: custom-skirmish-trails.firstedition.csv.languages.chinese
+      contents:
+        generalizeExtensionPaths: true
+        filter: files
+        type: string
+        value: ''
+    - name: persian
+      header: "Persian"
+      text: "The first trail csv file for the Persian game"
+      display: FileInput
+      url: custom-skirmish-trails.firstedition.csv.languages.persian
+      contents:
+        generalizeExtensionPaths: true
+        filter: files
+        type: string
+        value: ''
 - category:
   - Custom Skirmish Trails
-  name: extreme
-  header: "Warchest Trail" # '{{extreme}}'
-  text: "Customize the Warchest trail with a .csv file" # '{{extreme_descr}}'
-  display: FileInput
-  url: custom-skirmish-trails.warchest.csv.path
-  contents:
-    generalizeExtensionPaths: true
-    filter: files
-    type: string
-    value: ''
+  name: warchest
+  display: GroupBox
+  header: "Warchest Trail"
+  text: "Customize the Warchest trail"
+  hasHeader: true
+  children:
+  - name: csv
+    header: "Warchest Trail"
+    text: "Customize the Warchest trail with a .csv file. It is used for every game language that has no file of its own below."
+    display: FileInput
+    url: custom-skirmish-trails.warchest.csv.path
+    contents:
+      generalizeExtensionPaths: true
+      filter: files
+      type: string
+      value: ''
+  - name: settings
+    header: "Trail settings file"
+    text: "A .json file with settings for the Warchest trail as a whole: title, summary, starting year, button pictures, background, mission positions, csv files per language and AI names (see trail-settings.schema.json). Leave empty to keep the game's own."
+    display: FileInput
+    url: custom-skirmish-trails.warchest.settings.path
+    contents:
+      generalizeExtensionPaths: true
+      filter: files
+      type: string
+      value: ''
+  - name: conversion
+    header: "CSV data"
+    text: "Export the Warchest trail's csv files to one JSON file per mission, or import those JSON files back into the csv files"
+    hasHeader: true
+    display: CustomMenu
+    url: custom-skirmish-trails.warchest.conversion
+    contents:
+      type: custom
+      source:
+        html: csv-data-warchest.html
+        css: csv-data.css
+        js: csv-data.js
+  - name: languages
+    display: GroupBox
+    header: "Csv files per game language"
+    text: "A .csv file for one game language takes the place of the file above when the game runs in that language. A trail settings file with trail_csv_files overrides these."
+    hasHeader: true
+    children:
+    - name: english
+      header: "English"
+      text: "The Warchest trail csv file for the English game"
+      display: FileInput
+      url: custom-skirmish-trails.warchest.csv.languages.english
+      contents:
+        generalizeExtensionPaths: true
+        filter: files
+        type: string
+        value: ''
+    - name: german
+      header: "German"
+      text: "The Warchest trail csv file for the German game"
+      display: FileInput
+      url: custom-skirmish-trails.warchest.csv.languages.german
+      contents:
+        generalizeExtensionPaths: true
+        filter: files
+        type: string
+        value: ''
+    - name: french
+      header: "French"
+      text: "The Warchest trail csv file for the French game"
+      display: FileInput
+      url: custom-skirmish-trails.warchest.csv.languages.french
+      contents:
+        generalizeExtensionPaths: true
+        filter: files
+        type: string
+        value: ''
+    - name: spanish
+      header: "Spanish"
+      text: "The Warchest trail csv file for the Spanish game"
+      display: FileInput
+      url: custom-skirmish-trails.warchest.csv.languages.spanish
+      contents:
+        generalizeExtensionPaths: true
+        filter: files
+        type: string
+        value: ''
+    - name: italian
+      header: "Italian"
+      text: "The Warchest trail csv file for the Italian game"
+      display: FileInput
+      url: custom-skirmish-trails.warchest.csv.languages.italian
+      contents:
+        generalizeExtensionPaths: true
+        filter: files
+        type: string
+        value: ''
+    - name: polish
+      header: "Polish"
+      text: "The Warchest trail csv file for the Polish game"
+      display: FileInput
+      url: custom-skirmish-trails.warchest.csv.languages.polish
+      contents:
+        generalizeExtensionPaths: true
+        filter: files
+        type: string
+        value: ''
+    - name: russian
+      header: "Russian"
+      text: "The Warchest trail csv file for the Russian game"
+      display: FileInput
+      url: custom-skirmish-trails.warchest.csv.languages.russian
+      contents:
+        generalizeExtensionPaths: true
+        filter: files
+        type: string
+        value: ''
+    - name: hungarian
+      header: "Hungarian"
+      text: "The Warchest trail csv file for the Hungarian game"
+      display: FileInput
+      url: custom-skirmish-trails.warchest.csv.languages.hungarian
+      contents:
+        generalizeExtensionPaths: true
+        filter: files
+        type: string
+        value: ''
+    - name: turkish
+      header: "Turkish"
+      text: "The Warchest trail csv file for the Turkish game"
+      display: FileInput
+      url: custom-skirmish-trails.warchest.csv.languages.turkish
+      contents:
+        generalizeExtensionPaths: true
+        filter: files
+        type: string
+        value: ''
+    - name: chinese
+      header: "Chinese"
+      text: "The Warchest trail csv file for the Chinese game"
+      display: FileInput
+      url: custom-skirmish-trails.warchest.csv.languages.chinese
+      contents:
+        generalizeExtensionPaths: true
+        filter: files
+        type: string
+        value: ''
+    - name: persian
+      header: "Persian"
+      text: "The Warchest trail csv file for the Persian game"
+      display: FileInput
+      url: custom-skirmish-trails.warchest.csv.languages.persian
+      contents:
+        generalizeExtensionPaths: true
+        filter: files
+        type: string
+        value: ''
 - category:
   - Custom Skirmish Trails
-  name: extreme
-  header: "Extreme Trail" # '{{extreme}}'
-  text: "Customize the extreme trail with a .csv file" # '{{extreme_descr}}'
-  display: FileInput
-  url: custom-skirmish-trails.extremetrail.csv.path
-  contents:
-    generalizeExtensionPaths: true
-    filter: files
-    type: string
-    value: ''
+  name: extremetrail
+  display: GroupBox
+  header: "Extreme Trail"
+  text: "Customize the Extreme trail"
+  hasHeader: true
+  children:
+  - name: csv
+    header: "Extreme Trail"
+    text: "Customize the Extreme trail with a .csv file. It is used for every game language that has no file of its own below."
+    display: FileInput
+    url: custom-skirmish-trails.extremetrail.csv.path
+    contents:
+      generalizeExtensionPaths: true
+      filter: files
+      type: string
+      value: ''
+  - name: settings
+    header: "Trail settings file"
+    text: "A .json file with settings for the Extreme trail as a whole: title, summary, starting year, button pictures, background, mission positions, csv files per language and AI names (see trail-settings.schema.json). Leave empty to keep the game's own."
+    display: FileInput
+    url: custom-skirmish-trails.extremetrail.settings.path
+    contents:
+      generalizeExtensionPaths: true
+      filter: files
+      type: string
+      value: ''
+  - name: conversion
+    header: "CSV data"
+    text: "Export the Extreme trail's csv files to one JSON file per mission, or import those JSON files back into the csv files"
+    hasHeader: true
+    display: CustomMenu
+    url: custom-skirmish-trails.extremetrail.conversion
+    contents:
+      type: custom
+      source:
+        html: csv-data-extremetrail.html
+        css: csv-data.css
+        js: csv-data.js
+  - name: languages
+    display: GroupBox
+    header: "Csv files per game language"
+    text: "A .csv file for one game language takes the place of the file above when the game runs in that language. A trail settings file with trail_csv_files overrides these."
+    hasHeader: true
+    children:
+    - name: english
+      header: "English"
+      text: "The Extreme trail csv file for the English game"
+      display: FileInput
+      url: custom-skirmish-trails.extremetrail.csv.languages.english
+      contents:
+        generalizeExtensionPaths: true
+        filter: files
+        type: string
+        value: ''
+    - name: german
+      header: "German"
+      text: "The Extreme trail csv file for the German game"
+      display: FileInput
+      url: custom-skirmish-trails.extremetrail.csv.languages.german
+      contents:
+        generalizeExtensionPaths: true
+        filter: files
+        type: string
+        value: ''
+    - name: french
+      header: "French"
+      text: "The Extreme trail csv file for the French game"
+      display: FileInput
+      url: custom-skirmish-trails.extremetrail.csv.languages.french
+      contents:
+        generalizeExtensionPaths: true
+        filter: files
+        type: string
+        value: ''
+    - name: spanish
+      header: "Spanish"
+      text: "The Extreme trail csv file for the Spanish game"
+      display: FileInput
+      url: custom-skirmish-trails.extremetrail.csv.languages.spanish
+      contents:
+        generalizeExtensionPaths: true
+        filter: files
+        type: string
+        value: ''
+    - name: italian
+      header: "Italian"
+      text: "The Extreme trail csv file for the Italian game"
+      display: FileInput
+      url: custom-skirmish-trails.extremetrail.csv.languages.italian
+      contents:
+        generalizeExtensionPaths: true
+        filter: files
+        type: string
+        value: ''
+    - name: polish
+      header: "Polish"
+      text: "The Extreme trail csv file for the Polish game"
+      display: FileInput
+      url: custom-skirmish-trails.extremetrail.csv.languages.polish
+      contents:
+        generalizeExtensionPaths: true
+        filter: files
+        type: string
+        value: ''
+    - name: russian
+      header: "Russian"
+      text: "The Extreme trail csv file for the Russian game"
+      display: FileInput
+      url: custom-skirmish-trails.extremetrail.csv.languages.russian
+      contents:
+        generalizeExtensionPaths: true
+        filter: files
+        type: string
+        value: ''
+    - name: hungarian
+      header: "Hungarian"
+      text: "The Extreme trail csv file for the Hungarian game"
+      display: FileInput
+      url: custom-skirmish-trails.extremetrail.csv.languages.hungarian
+      contents:
+        generalizeExtensionPaths: true
+        filter: files
+        type: string
+        value: ''
+    - name: turkish
+      header: "Turkish"
+      text: "The Extreme trail csv file for the Turkish game"
+      display: FileInput
+      url: custom-skirmish-trails.extremetrail.csv.languages.turkish
+      contents:
+        generalizeExtensionPaths: true
+        filter: files
+        type: string
+        value: ''
+    - name: chinese
+      header: "Chinese"
+      text: "The Extreme trail csv file for the Chinese game"
+      display: FileInput
+      url: custom-skirmish-trails.extremetrail.csv.languages.chinese
+      contents:
+        generalizeExtensionPaths: true
+        filter: files
+        type: string
+        value: ''
+    - name: persian
+      header: "Persian"
+      text: "The Extreme trail csv file for the Persian game"
+      display: FileInput
+      url: custom-skirmish-trails.extremetrail.csv.languages.persian
+      contents:
+        generalizeExtensionPaths: true
+        filter: files
+        type: string
+        value: ''
 - category:
   - Developer
   - Custom Skirmish Trails
-  name: extreme
+  name: strict_format
   hasHeader: false
-  header: "Enable strict mode to check for csv errors" # '{{extreme}}'
-  text: "Which may result in error message boxes at game start" # '{{extreme_descr}}'
+  header: "Enable strict mode to check for csv errors"
+  text: "Which may result in error message boxes at game start"
   display: UCP2Switch
   url: custom-skirmish-trails.csv.strict_format
   contents:
