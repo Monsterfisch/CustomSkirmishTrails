@@ -14,6 +14,7 @@ local patches = require("customskirmishtrails.patches")
 local settingsModule = require("customskirmishtrails.settings")
 local visuals = require("customskirmishtrails.visuals")
 local conversion = require("customskirmishtrails.conversion")
+local winfiles = require("customskirmishtrails.winfiles")
 
 local TRAIL_PROGRESS_ADDRESSES = memory.TRAIL_PROGRESS_ADDRESSES
 local REGISTRY = memory.REGISTRY
@@ -215,14 +216,43 @@ local function readRequests()
   return (ok and type(data) == "table") and data or {}
 end
 
-local function writeRequests(requests)
-  local handle = io.open(REQUESTS_FILE, "wb")
-  if handle == nil then
-    log(WARNING, "custom-skirmish-trails: cannot write " .. REQUESTS_FILE)
-    return
+---The status file as JSON. Written by hand: UCP's json:encode_pretty crashed the game here.
+local function formatRequests(requests)
+  local q = conversion.jsonString
+  local keys = {}
+  for key in pairs(requests) do
+    table.insert(keys, key)
   end
-  handle:write(json:encode_pretty(requests))
-  handle:close()
+  table.sort(keys)
+  local trails = {}
+  for _, key in ipairs(keys) do
+    local entry = requests[key]
+    if type(entry) == "table" then
+      local results = {}
+      for _, line in ipairs(type(entry.results) == "table" and entry.results or {}) do
+        table.insert(results, "      " .. q(tostring(line)))
+      end
+      table.insert(trails, table.concat({
+        "  " .. q(key) .. ": {",
+        '    "action": ' .. q(tostring(entry.action or "")) .. ",",
+        '    "request": ' .. q(tostring(entry.request or "")) .. ",",
+        '    "time": ' .. q(tostring(entry.time or "")) .. ",",
+        '    "results": [',
+        table.concat(results, ",\n"),
+        "    ]",
+        "  }",
+      }, "\n"))
+    end
+  end
+  return "{\n" .. table.concat(trails, ",\n") .. "\n}\n"
+end
+
+local function writeRequests(requests)
+  -- through Windows: UCP's io.open left this file empty in the game
+  local ok, err = winfiles.writeFile(REQUESTS_FILE, formatRequests(requests))
+  if not ok then
+    log(WARNING, "custom-skirmish-trails: cannot write " .. REQUESTS_FILE .. ": " .. tostring(err))
+  end
 end
 
 local function knownHeaders()

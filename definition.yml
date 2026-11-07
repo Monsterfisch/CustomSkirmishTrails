@@ -2,7 +2,7 @@ name: custom-skirmish-trails
 display-name: Custom Skirmish Trails
 author: gynt, Monsterfish
 type: module
-version: 1.3.1
+version: 1.3.3
 dependencies:
   textResourceModifier: ">= 0.3.0"
   gmResourceModifier: ">= 0.3.0"

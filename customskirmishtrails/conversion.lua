@@ -120,6 +120,8 @@ local function isPlainInteger(value)
   return number ~= nil and tostring(number) == value
 end
 
+conversion.jsonString = jsonString
+
 ---A JSON object with its keys in the order given.
 function conversion.formatJson(keys, values)
   local lines = {}
@@ -286,11 +288,7 @@ function conversion.import(csvPath, aiMapping, knownHeaders)
     rows, newline = conversion.parseCsv(existingText)
     existingHeader = rows[1]
     -- keep the previous file in the cache, in case the import was not meant
-    local backup = io.open(string.format("ucp/.cache/custom-skirmish-trails-backup-%s.csv", name), "wb")
-    if backup ~= nil then
-      backup:write(existingText)
-      backup:close()
-    end
+    winfiles.writeFile(string.format("ucp/.cache/custom-skirmish-trails-backup-%s.csv", name), existingText)
   end
 
   local header = columnOrder(existingHeader, missions, knownHeaders)
