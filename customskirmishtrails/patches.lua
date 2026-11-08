@@ -26,6 +26,8 @@ local FUNCTION_AOBS = {
   setup = "8B 44 24 04 8B 0D ? ? ? ? 8D 04 C0 C1 E0 04 83 F9 02 56 8D B0 ? ? ? ?",
   setup2 = "8B 44 24 04 8B 0D ? ? ? ? 8D 04 C0 55 C1 E0 04 83 F9 02 56 8D A8 ? ? ? ?",
   dates = "53 55 56 57 8B 7C 24 14 85 FF 74 05 83 FF 01 75 0A C7 81 8C 1F 00 00 90 33 00 00",
+  startbutton = "8B 0D ? ? ? ? 33 D2 33 C0 83 F9 02 89 15 ? ? ? ? 75 09 83 3D ? ? ? ? 14",
+  restart = "8B 44 24 04 83 E8 16 53 56 57 74 7E BF 01 00 00 00 2B C7 0F 85 ? ? ? ?",
   ainames = "56 57 BF ? ? ? ? BE ? ? ? ? 8D 64 24 00 83 BE 70 FF FF FF FF ? ? ? ? ? ?",
   syncnames = "83 EC 08 53 55 56 57 89 4C 24 14 BE 01 00 00 00 C7 44 24 10 ? ? ? ? BB ? ? ? ? BD ? ? ? ?",
   -- stops before +0x1A, where aiSwapper detours the AI part of this function
@@ -74,6 +76,18 @@ local COUNT_SITES = {
   { fn = "render", offset = 0xC55, trail = "extremeTrail", value = "N-1", bytes = "83 FA 13", immOffset = 2, immSize = 1, old = 0x13 },
   { fn = "render", offset = 0xCD1, trail = "extremeTrail", value = "N-1", bytes = "83 FE 13", immOffset = 2, immSize = 1, old = 0x13 },
   { fn = "render", offset = 0xCD6, trail = "extremeTrail", value = "N-1", bytes = "BE 13 00 00 00", immOffset = 1, immSize = 4, old = 0x13 },
+  -- the briefing's Start button: greyed out (draw) and refusing to start (click) when the
+  -- selected mission is past the last one
+  { fn = "startbutton", offset = 0x15, trail = "extremeTrail", value = "N", bytes = "83 3D ? ? ? ? 14", immOffset = 6, immSize = 1, old = 0x14 },
+  { fn = "startbutton", offset = 0x23, trail = "warchestTrail", value = "N", bytes = "83 3D ? ? ? ? 1E", immOffset = 6, immSize = 1, old = 0x1E },
+  { fn = "startbutton", offset = 0x30, trail = "firstEditionTrail", value = "N", bytes = "83 3D ? ? ? ? 32", immOffset = 6, immSize = 1, old = 0x32 },
+  { fn = "startbutton", offset = 0x99, trail = "extremeTrail", value = "N", bytes = "83 F8 14", immOffset = 2, immSize = 1, old = 0x14 },
+  { fn = "startbutton", offset = 0xA8, trail = "warchestTrail", value = "N", bytes = "83 F8 1E", immOffset = 2, immSize = 1, old = 0x1E },
+  { fn = "startbutton", offset = 0xB2, trail = "firstEditionTrail", value = "N", bytes = "83 F8 32", immOffset = 2, immSize = 1, old = 0x32 },
+  -- restarting a trail mission from the game's menu sets the mission up again the same way
+  { fn = "restart", offset = 0x2F3, trail = "extremeTrail", value = "N", bytes = "83 F8 14", immOffset = 2, immSize = 1, old = 0x14 },
+  { fn = "restart", offset = 0x31B, trail = "warchestTrail", value = "N", bytes = "83 F8 1E", immOffset = 2, immSize = 1, old = 0x1E },
+  { fn = "restart", offset = 0x33F, trail = "firstEditionTrail", value = "N", bytes = "83 F8 32", immOffset = 2, immSize = 1, old = 0x32 },
   -- The vanilla code compares the Extreme trail's furthest mission with 30 here, a leftover
   -- that never matched with 20 missions. With a mission count of our own it gets that count.
   { fn = "render", offset = 0xF8C, trail = "extremeTrail", value = "N", bytes = "83 3D ? ? ? ? 1E", immOffset = 6, immSize = 1, old = 0x1E },

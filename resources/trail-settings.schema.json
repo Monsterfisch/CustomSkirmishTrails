@@ -5,19 +5,55 @@
   "description": "Settings for one skirmish trail as a whole. Every entry is optional; a missing or empty entry keeps the game's own value. Relative file paths are taken from the folder of this file.",
   "type": "object",
   "properties": {
-    "$schema": { "type": "string" },
+    "$schema": {
+      "type": "string"
+    },
     "trail_type": {
       "description": "The trail these settings are for. The file is ignored when it is set for another trail in the UCP GUI.",
       "type": "string",
-      "enum": ["First", "Warchest", "Extreme"]
+      "enum": [
+        "First",
+        "Warchest",
+        "Extreme"
+      ]
     },
     "trail_title": {
-      "description": "The trail's title under its button in the skirmish menu.",
-      "type": "string"
+      "description": "The trail's title under its button in the skirmish menu. Either one text for every language, or an object of texts per game language (\"english\", \"german\", ...) with \"default\" for every other language, like trail_csv_files.",
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "default": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": {
+            "type": "string"
+          }
+        }
+      ]
     },
     "trail_summary": {
-      "description": "The short description under the title in the skirmish menu.",
-      "type": "string"
+      "description": "The short description under the title in the skirmish menu. Longer than 540 pixels, it wraps into a second line. Either one text for every language, or an object of texts per game language (\"english\", \"german\", ...) with \"default\" for every other language, like trail_csv_files.",
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "default": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": {
+            "type": "string"
+          }
+        }
+      ]
     },
     "starting_year": {
       "description": "The year the trail's first mission starts in. The game uses 1100 for the first trail and 1130 for the Warchest and the Extreme trail.",
@@ -52,10 +88,21 @@
       "items": {
         "type": "object",
         "properties": {
-          "x": { "type": "integer", "minimum": 0, "maximum": 800 },
-          "y": { "type": "integer", "minimum": 0, "maximum": 600 }
+          "x": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 800
+          },
+          "y": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 600
+          }
         },
-        "required": ["x", "y"],
+        "required": [
+          "x",
+          "y"
+        ],
         "additionalProperties": false
       }
     },
@@ -63,30 +110,66 @@
       "description": "The trail's csv file per game language, for example \"english\", \"german\", \"french\". \"default\" is used for every other language. When this is given, it takes the place of the csv files set in the UCP GUI.",
       "type": "object",
       "properties": {
-        "default": { "type": "string" }
+        "default": {
+          "type": "string"
+        }
       },
-      "additionalProperties": { "type": "string" }
+      "additionalProperties": {
+        "type": "string"
+      }
     },
     "ai_character_mapping": {
       "description": "Names for the AI keys of the csv columns player1 to player8. Export CSV Data writes these names into the mission JSON files and Import CSV Data turns them back into the keys. The csv file may use them too. Each name must be unique and must not be another AI's key.",
       "type": "object",
       "properties": {
-        "SK_RAT": { "type": "string" },
-        "SK_SNAKE": { "type": "string" },
-        "SK_PIG": { "type": "string" },
-        "SK_WOLF": { "type": "string" },
-        "SK_SALADIN": { "type": "string" },
-        "SK_CALIPH": { "type": "string" },
-        "SK_SULTAN": { "type": "string" },
-        "SK_RICHARD": { "type": "string" },
-        "SK_FREDERICK": { "type": "string" },
-        "SK_PHILLIP": { "type": "string" },
-        "SK_WAZIR": { "type": "string" },
-        "SK_EMIR": { "type": "string" },
-        "SK_NIZAR": { "type": "string" },
-        "SK_SHERIFF": { "type": "string" },
-        "SK_MARSHAL": { "type": "string" },
-        "SK_ABBOT": { "type": "string" }
+        "SK_RAT": {
+          "type": "string"
+        },
+        "SK_SNAKE": {
+          "type": "string"
+        },
+        "SK_PIG": {
+          "type": "string"
+        },
+        "SK_WOLF": {
+          "type": "string"
+        },
+        "SK_SALADIN": {
+          "type": "string"
+        },
+        "SK_CALIPH": {
+          "type": "string"
+        },
+        "SK_SULTAN": {
+          "type": "string"
+        },
+        "SK_RICHARD": {
+          "type": "string"
+        },
+        "SK_FREDERICK": {
+          "type": "string"
+        },
+        "SK_PHILLIP": {
+          "type": "string"
+        },
+        "SK_WAZIR": {
+          "type": "string"
+        },
+        "SK_EMIR": {
+          "type": "string"
+        },
+        "SK_NIZAR": {
+          "type": "string"
+        },
+        "SK_SHERIFF": {
+          "type": "string"
+        },
+        "SK_MARSHAL": {
+          "type": "string"
+        },
+        "SK_ABBOT": {
+          "type": "string"
+        }
       },
       "additionalProperties": false
     }

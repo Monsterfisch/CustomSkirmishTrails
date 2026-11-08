@@ -102,7 +102,7 @@ Ten optional csv columns, best placed at the end:
 ### Trail settings file
 Each trail can have a trail settings file (a .json file, set in the GUI next to the trail's csv file) with settings for the trail as a whole. `resources/trail-settings.schema.json` describes it and `resources/trails/template-*-settings.json` hold the game's own values. Every entry is optional:
 - `trail_type`: `First`, `Warchest` or `Extreme`.
-- `trail_title`, `trail_summary`: the texts under the trail's button in the skirmish menu.
+- `trail_title`, `trail_summary`: the texts under the trail's button in the skirmish menu, either one text or one per game language like `trail_csv_files` (`{ "default": "...", "german": "..." }`). A summary wider than 540 pixels wraps into a second line; both texts sit 10 pixels higher then.
 - `starting_year`: the year the first mission starts in.
 - `trail_visuals`: `trail_button_idle` and `trail_button_highlighted` (pictures, for example .png, for the trail's button in the skirmish menu) and `trail_background` (the trail screen's background: a .tgx file, or a .png/.jpg/.bmp that the game turns into a .tgx once and keeps in `ucp/.cache`; use the size of the game's own file).
 - `trail_mission_positions`: a list of `{ "x": .., "y": .. }` points on the 800 x 600 trail screen, one per mission. Their number is the trail's number of missions (at most 50 for the first trail, 30 for the Warchest and the Extreme trail), and the game reads that many lines from the csv file.
@@ -112,7 +112,13 @@ Each trail can have a trail settings file (a .json file, set in the GUI next to 
 Relative paths in the file are taken from the file's own folder.
 
 ### Csv files per language
-Next to each trail's csv file, the GUI takes a csv file per game language. The game uses the one for its language and the first one for every other language. A trail settings file with `trail_csv_files` takes the place of these.
+In the GUI, a trail's csv files (default and per game language) are in the collapsible "Csv files" group. Normally the trail settings file names them instead. The game uses the one for its language and the first one for every other language. A trail settings file with `trail_csv_files` takes the place of these.
+
+### File paths
+Each trail's "File paths" panel lists the files set for it and clears them (the GUI's own reset only works right after a path was set).
+
+### Strict mode
+Developer settings: logs every problem in the csv and json files, every trail setting that falls back to the game's own value, and how a trail's language csv files differ (texts left out). Without it, one warning per file with problems.
 
 ### Export and Import CSV Data
 Each trail's "CSV data" panel in the GUI has an Export and an Import button. Export writes every mission line of the trail's csv files into a JSON file of its own (`<csv name>/<csv name>_mission_01.json`, ...), Import puts them back together into the csv files. The GUI cannot write files itself, so a button records the request and the game carries it out once at its next start; the panel then shows what was done. With an `ai_character_mapping`, the JSON files use your AI names and the csv file the AI keys.

@@ -1,0 +1,49 @@
+html,
+body {
+  width: 100%;
+  height: 100%;
+  background: #212529;
+  color: whitesmoke;
+  font-family: "River Avenue", serif;
+}
+
+#file-paths {
+  padding: 1em 1.5em;
+  line-height: 1.4;
+}
+
+#file-paths p {
+  margin-bottom: 0.6em;
+}
+
+#file-paths #notice {
+  color: #e0c070;
+}
+
+#file-paths table {
+  border-collapse: collapse;
+  margin: 0.5em 0 1em 0;
+}
+
+#file-paths td {
+  padding: 0.25em 1em 0.25em 0;
+  vertical-align: middle;
+}
+
+#file-paths td.path {
+  font-family: monospace;
+  word-break: break-all;
+}
+
+#file-paths button {
+  padding: 0.2em 1em;
+  cursor: pointer;
+  color: white;
+  background: #3a3f44;
+  border: 1px solid #8a7a5a;
+  font: inherit;
+}
+
+#file-paths button:hover {
+  background: #4a5056;
+}

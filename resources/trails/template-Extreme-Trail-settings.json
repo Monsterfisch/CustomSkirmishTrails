@@ -1,8 +1,12 @@
 {
   "$schema": "../trail-settings.schema.json",
   "trail_type": "Extreme",
-  "trail_title": "",
-  "trail_summary": "",
+  "trail_title": {
+    "default": ""
+  },
+  "trail_summary": {
+    "default": ""
+  },
   "starting_year": 1130,
   "trail_visuals": {
     "trail_button_idle": "",

@@ -20,8 +20,30 @@ settings.AI_KEYS = {
 -- the trail screen is 800 x 600
 local MAX_X, MAX_Y = 800, 600
 
+local strict = false
+local problems = {}
+
+---Strict mode (Developer settings): every problem and every entry that falls back to the game's
+---own value is logged. Otherwise only one line per file that has problems.
+function settings.setStrict(value)
+  strict = value == true
+end
+
+---A problem with one entry; the entry falls back to the game's own value.
 local function warn(path, message, ...)
+  problems[path] = (problems[path] or 0) + 1
+  log(strict and WARNING or VERBOSE, string.format("custom-skirmish-trails: %s: " .. message, path, ...))
+end
+
+---A problem that makes the whole file unusable: always logged.
+local function fail(path, message, ...)
   log(WARNING, string.format("custom-skirmish-trails: %s: " .. message, path, ...))
+end
+
+local function info(path, message, ...)
+  if strict then
+    log(INFO, string.format("custom-skirmish-trails: %s: " .. message, path, ...))
+  end
 end
 
 local function readText(path)
@@ -63,6 +85,41 @@ local function integer(value)
     return nil
   end
   return math.tointeger(value)
+end
+
+---A text given per game language: { "default": "...", "german": "..." }. A plain string counts
+---as the default. Returns a map of lower-case languages to texts, or nil.
+local function readLocalizedText(path, key, value)
+  if value == nil then
+    return nil
+  end
+  if type(value) == "string" then
+    return value ~= "" and { default = value } or nil
+  end
+  if type(value) ~= "table" then
+    warn(path, "%s must be a text or an object of texts per language", key)
+    return nil
+  end
+  local texts, count = {}, 0
+  for language, text in pairs(value) do
+    if type(language) == "string" and nonEmptyString(text) then
+      texts[language:lower()] = text
+      count = count + 1
+    elseif text ~= "" then
+      warn(path, "%s entry '%s' is not a text", key, tostring(language))
+    end
+  end
+  return count > 0 and texts or nil
+end
+
+---The text of a per-language map for `language`, falling back to "default" (and English for
+---the American game).
+function settings.localized(texts, language)
+  if texts == nil then
+    return nil
+  end
+  language = (language or ""):lower()
+  return texts[language] or (language == "american" and texts.english) or texts.default
 end
 
 local function readPositions(path, value, trailName)
@@ -155,23 +212,23 @@ end
 function settings.load(path, trailName)
   local contents, err = readText(path)
   if contents == nil then
-    warn(path, "cannot read the trail settings file (%s)", tostring(err))
+    fail(path, "cannot read the trail settings file (%s)", tostring(err))
     return nil
   end
   local ok, data = pcall(function() return json:decode(contents) end)
   if not ok or type(data) ~= "table" then
-    warn(path, "the trail settings file is not valid JSON: %s", tostring(data))
+    fail(path, "the trail settings file is not valid JSON: %s", tostring(data))
     return nil
   end
 
   if data.trail_type ~= nil then
     local declared = settings.TRAIL_TYPES[data.trail_type]
     if declared == nil then
-      warn(path, "trail_type must be First, Warchest or Extreme, not '%s'", tostring(data.trail_type))
+      fail(path, "trail_type must be First, Warchest or Extreme, not '%s'", tostring(data.trail_type))
       return nil
     end
     if declared ~= trailName then
-      warn(path, "this file is for the %s trail but is set for another trail; it is not used", data.trail_type)
+      fail(path, "this file is for the %s trail but is set for another trail; it is not used", data.trail_type)
       return nil
     end
   end
@@ -179,12 +236,8 @@ function settings.load(path, trailName)
   local directory = settings.directoryOf(path)
   local result = { path = path, trail = trailName }
 
-  if nonEmptyString(data.trail_title) then
-    result.title = data.trail_title
-  end
-  if nonEmptyString(data.trail_summary) then
-    result.summary = data.trail_summary
-  end
+  result.title = readLocalizedText(path, "trail_title", data.trail_title)
+  result.summary = readLocalizedText(path, "trail_summary", data.trail_summary)
 
   if data.starting_year ~= nil then
     local year = integer(data.starting_year)
@@ -213,6 +266,53 @@ function settings.load(path, trailName)
   result.csvFiles = readCsvFiles(path, directory, data.trail_csv_files)
   result.aiMapping, result.hasAiMapping = readAiMapping(path, data.ai_character_mapping)
 
+  -- what falls back to the game's own values (strict mode only)
+  if data.trail_type == nil then
+    info(path, "trail_type is not set; the file is used for the trail it is set for in the GUI")
+  end
+  if result.title == nil then
+    info(path, "trail_title is not set; the game's own title is shown")
+  elseif result.title.default == nil then
+    info(path, "trail_title has no \"default\"; game languages without their own title show the game's title")
+  end
+  if result.summary == nil then
+    info(path, "trail_summary is not set; the game's own summary is shown")
+  elseif result.summary.default == nil then
+    info(path, "trail_summary has no \"default\"; game languages without their own summary show the game's summary")
+  end
+  if result.startingYear == nil then
+    info(path, "starting_year is not set; the trail starts in the game's own year")
+  end
+  for _, jsonKey in ipairs({ "trail_button_idle", "trail_button_highlighted", "trail_background" }) do
+    local key = ({ trail_button_idle = "buttonIdle", trail_button_highlighted = "buttonHighlighted",
+                   trail_background = "background" })[jsonKey]
+    if result.visuals[key] == nil then
+      info(path, "trail_visuals.%s is not set; the game's own picture is shown", jsonKey)
+    end
+  end
+  if result.positions == nil then
+    info(path, "trail_mission_positions is not set; the trail keeps the game's mission count and button positions")
+  end
+  if result.csvFiles == nil then
+    info(path, "trail_csv_files is not set; the csv files set in the GUI are used")
+  elseif result.csvFiles.default == nil then
+    info(path, "trail_csv_files has no \"default\"; game languages without their own file use the csv file set in the GUI")
+  end
+  if not result.hasAiMapping then
+    info(path, "ai_character_mapping is not set; Export and Import keep the AI keys (SK_RAT, ...)")
+  else
+    local value = type(data.ai_character_mapping) == "table" and data.ai_character_mapping or {}
+    for _, key in ipairs(settings.AI_KEYS) do
+      if not nonEmptyString(value[key]) then
+        info(path, "ai_character_mapping.%s is not set; it keeps its own name", key)
+      end
+    end
+  end
+
+  if not strict and (problems[path] or 0) > 0 then
+    log(WARNING, string.format("custom-skirmish-trails: %d problems in the trail settings file %s; those entries use "
+      .. "the game's own values. Turn on strict mode (Developer settings) to see them.", problems[path], path))
+  end
   return result
 end
 
@@ -222,7 +322,9 @@ end
 function settings.chooseCsv(trailSettings, guiLanguageFiles, guiDefault, language)
   language = (language or ""):lower()
   if trailSettings ~= nil and trailSettings.csvFiles ~= nil then
-    return trailSettings.csvFiles[language] or trailSettings.csvFiles.default or guiDefault
+    return trailSettings.csvFiles[language]
+      or (language == "american" and trailSettings.csvFiles.english)
+      or trailSettings.csvFiles.default or guiDefault
   end
   local fromGui = guiLanguageFiles ~= nil and guiLanguageFiles[language] or nil
   if nonEmptyString(fromGui) then

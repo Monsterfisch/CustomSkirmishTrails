@@ -151,6 +151,90 @@ local function cellOf(value, key, file)
   error(string.format("%s: '%s' must be a text or a number", file, key))
 end
 
+-- Comparing language csv files -------------------------------------------------------------
+
+-- texts that are meant to differ between the languages
+conversion.TEXT_COLUMNS = {
+  mission_name = true,
+  text_description_line_01 = true, text_description_line_02 = true, text_description_line_03 = true,
+  text_description_line_04 = true, text_description_line_05 = true, text_description_line_06 = true,
+  text_description_line_07 = true, text_description_line_08 = true,
+  player1_name = true, player2_name = true, player3_name = true, player4_name = true,
+  player5_name = true, player6_name = true, player7_name = true, player8_name = true,
+}
+
+local function readRows(path)
+  local text, err = settingsModule.readText(path)
+  if text == nil then
+    return nil, string.format("cannot read %s (%s)", path, tostring(err))
+  end
+  local rows = conversion.parseCsv(text)
+  if #rows < 1 then
+    return nil, path .. " is empty"
+  end
+  local header, missions = rows[1], {}
+  for index = 2, #rows do
+    local mission = {}
+    for column, key in ipairs(header) do
+      if key ~= "" then
+        mission[key] = rows[index][column] or ""
+      end
+    end
+    table.insert(missions, mission)
+  end
+  return { header = header, missions = missions }
+end
+
+---The differences between the csv files `basePath` and `otherPath`, leaving out the text columns.
+function conversion.compareCsv(basePath, otherPath)
+  local base, baseError = readRows(basePath)
+  if base == nil then
+    return { baseError }
+  end
+  local other, otherError = readRows(otherPath)
+  if other == nil then
+    return { otherError }
+  end
+  local differences = {}
+  local function add(message, ...)
+    table.insert(differences, string.format(message, ...))
+  end
+  if #base.missions ~= #other.missions then
+    add("%d missions in %s, %d in %s", #base.missions, basePath, #other.missions, otherPath)
+  end
+  local columns, inBase, inOther = {}, {}, {}
+  for _, key in ipairs(base.header) do
+    if key ~= "" then
+      inBase[key] = true
+      table.insert(columns, key)
+    end
+  end
+  for _, key in ipairs(other.header) do
+    if key ~= "" then
+      inOther[key] = true
+    end
+  end
+  for _, key in ipairs(base.header) do
+    if key ~= "" and not inOther[key] and not conversion.TEXT_COLUMNS[key] then
+      add("column %s is only in %s", key, basePath)
+    end
+  end
+  for _, key in ipairs(other.header) do
+    if key ~= "" and not inBase[key] and not conversion.TEXT_COLUMNS[key] then
+      add("column %s is only in %s", key, otherPath)
+    end
+  end
+  for index = 1, math.min(#base.missions, #other.missions) do
+    local a, b = base.missions[index], other.missions[index]
+    for _, key in ipairs(columns) do
+      if inOther[key] and not conversion.TEXT_COLUMNS[key] and a[key] ~= b[key] then
+        add("mission %d, %s: '%s' in %s, '%s' in %s", index, key, a[key], basePath, b[key], otherPath)
+      end
+    end
+  end
+  return differences
+end
+
 -- Export and Import ----------------------------------------------------------------------
 
 local function folderOf(csvPath)

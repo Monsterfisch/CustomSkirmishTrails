@@ -13,6 +13,7 @@ local start_goods = require("customskirmishtrails.start_goods")
 local patches = require("customskirmishtrails.patches")
 local settingsModule = require("customskirmishtrails.settings")
 local visuals = require("customskirmishtrails.visuals")
+local menutext = require("customskirmishtrails.menutext")
 local conversion = require("customskirmishtrails.conversion")
 local winfiles = require("customskirmishtrails.winfiles")
 
@@ -312,11 +313,13 @@ end
 return {
   enable = function(self, config)
     config = config or {}
-    if type(config.csv) == "table" and config.csv.strict_format == true then
+    local strict = type(config.csv) == "table" and config.csv.strict_format == true
+    if strict then
       cst_io.setStrictness("error")
     else
       cst_io.setStrictness("warning")
     end
+    settingsModule.setStrict(strict)
 
     local _, skirmishTrailMissions, extremeTrailMissions, warchestTrailMissions = utils.AOBExtract("8D ? I(? ? ? ?) 75 08 8D ? I(? ? ? ?) EB 0B 83 F9 01 75 06 8D ? I(? ? ? ?) 53")
     local missionTables = {
@@ -359,7 +362,6 @@ return {
           patches.setPositions(trail.name, positions)
         end
         startYears[trail.name] = settings.startingYear
-        visuals.applyTexts(trail.name, settings.title, settings.summary)
         visuals.applyVisuals(trail.name, settings.visuals)
         if settings.hasAiMapping then
           interface.setAiAliases(trail.name, settings.aiMapping)
@@ -367,6 +369,31 @@ return {
       end
     end
     patches.setStartYears(startYears)
+
+    -- strict mode: how the language csv files of a trail differ from its default one
+    if strict then
+      for _, trail in ipairs(TRAILS) do
+        local settings = trailSettings[trail.name]
+        local default, languages = guiCsv(config, trail)
+        local base = (settings ~= nil and settings.csvFiles ~= nil and settings.csvFiles.default) or default
+        if nonEmpty(base) then
+          for _, other in ipairs(settingsModule.allCsvFiles(settings, languages, default)) do
+            if other ~= base then
+              local okCompare, differences = pcall(conversion.compareCsv, base, other)
+              if not okCompare then
+                differences = { tostring(differences) }
+              end
+              if #differences == 0 then
+                log(INFO, string.format("custom-skirmish-trails: %s and %s differ only in their texts", base, other))
+              end
+              for _, difference in ipairs(differences) do
+                log(INFO, "custom-skirmish-trails: " .. difference)
+              end
+            end
+          end
+        end
+      end
+    end
 
     -- Export / Import CSV Data requested in the GUI
     local ok, err = pcall(runConversions, config, trailSettings)
@@ -385,11 +412,25 @@ return {
       end
 
       for _, trail in ipairs(TRAILS) do
+        local trailSettingsForTexts = trailSettings[trail.name]
+        if trailSettingsForTexts ~= nil then
+          local okTexts, textError = pcall(menutext.apply, trail.name,
+            settingsModule.localized(trailSettingsForTexts.title, language),
+            settingsModule.localized(trailSettingsForTexts.summary, language))
+          if not okTexts then
+            log(WARNING, "custom-skirmish-trails: trail title and summary: " .. tostring(textError))
+          end
+        end
         local default, languages = guiCsv(config, trail)
         local path = settingsModule.chooseCsv(trailSettings[trail.name], languages, default, language)
         if nonEmpty(path) then
           log(INFO, string.format("custom-skirmish-trails: %s trail (%s): %s", trail.type, language, path))
-          applyTrail(trail.name, path, missionTables[trail.name], missionCounts[trail.name])
+          local okTrail, trailError = pcall(applyTrail, trail.name, path, missionTables[trail.name],
+            missionCounts[trail.name])
+          if not okTrail then
+            log(WARNING, string.format("custom-skirmish-trails: the trail csv file %s cannot be used, so the %s "
+              .. "trail keeps the game's own missions: %s", path, trail.type, tostring(trailError)))
+          end
         end
       end
 

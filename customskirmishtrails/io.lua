@@ -369,9 +369,11 @@ end
 local fails = {}
 
 local function fail(name, index, expected, received, value)
-  local msg = string.format("header %s: entry %s, expected a '%s' but received a '%s' (length: %d): %s ", name, index, expected, received, (value or ""):len(), value)
+  local text = tostring(value or "")
+  local msg = string.format("header %s: entry %s, expected a '%s' but received a '%s' (length: %d): %s ", name, index, expected, received, text:len(), text)
   table.insert(fails, msg)
-  log(WARNING, msg)
+  -- every single problem only in strict mode; otherwise one summary line per file
+  log(strictness == "warning" and VERBOSE or WARNING, msg)
 end
 
 local function numberify(name, index, expected, received, value)
@@ -381,7 +383,7 @@ local function numberify(name, index, expected, received, value)
   end
 
   if nvalue == nil then
-    fail(name, expected, received, value)
+    fail(name, index, expected, received, value)
   elseif expected == "binary" and (nvalue ~= 1 and nvalue ~= 0) then
     fail(name, index, expected, received, value)
   elseif expected == "integer" then
@@ -473,7 +475,11 @@ local function readCSV(path, limit)
     elseif strictness == "fatal" then
       ll = FATAL
     end
-    log(ll, string.format("There were %d warnings related to the skirmish trail csv file, consult the log for details", #fails))
+    if strictness == "warning" then
+      log(WARNING, string.format("custom-skirmish-trails: %d problems in the trail csv file %s; turn on strict mode (Developer settings) to see them", #fails, path))
+    else
+      log(ll, string.format("There were %d warnings related to the skirmish trail csv file %s, consult the log for details", #fails, path))
+    end
 
     
   end
@@ -488,6 +494,7 @@ end
 
 return {
   setStrictness = function(s) strictness = s end,
+  isStrict = function() return strictness ~= "warning" end,
   readCSV = readCSV,
   HEADERS =  HEADERS,
   HEADERS_EXTRA = HEADERS_EXTRA,
