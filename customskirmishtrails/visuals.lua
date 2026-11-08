@@ -3,6 +3,7 @@
 -- and summary under the button.
 
 local tgx = require("customskirmishtrails.tgx")
+local winfiles = require("customskirmishtrails.winfiles")
 
 local visuals = {}
 local backgroundTgx
@@ -41,6 +42,25 @@ local function isExtreme()
   return ok and extreme == true
 end
 
+local comInitialized = false
+
+---gmResourceModifier decodes pictures with Windows' WIC, which needs COM on the game's
+---thread. The game sets COM up itself (CoInitialize) during its start; this does the same
+---when a picture has to be loaded before that.
+local function initializeCom()
+  if comInitialized then
+    return false
+  end
+  comInitialized = true
+  local coInitialize = winfiles.dllFunction("ole32.dll", "CoInitialize", 1)
+  if coInitialize == nil then
+    return false
+  end
+  local result = coInitialize(0) & 0xFFFFFFFF
+  log(INFO, string.format("custom-skirmish-trails: CoInitialize for the trail button pictures: 0x%X", result))
+  return result == 0 or result == 1 -- S_OK, S_FALSE (already set up)
+end
+
 local function loadImage(path)
   local gm = modules.gmResourceModifier
   if gm == nil or gm.LoadResourceFromImage == nil then
@@ -48,10 +68,16 @@ local function loadImage(path)
     return nil
   end
   local resolved = ucp.internal.resolveAliasedPath(path)
-  local ok, resource = pcall(function() return gm:LoadResourceFromImage(resolved) end)
-  if not ok or resource == nil or resource < 0 then
+  local function load()
+    local ok, resource = pcall(function() return gm:LoadResourceFromImage(resolved) end)
+    return ok and resource ~= nil and resource >= 0 and resource or nil
+  end
+  local resource = load()
+  if resource == nil and initializeCom() then
+    resource = load()
+  end
+  if resource == nil then
     log(WARNING, string.format("custom-skirmish-trails: cannot load the picture %s", path))
-    return nil
   end
   return resource
 end
@@ -117,12 +143,15 @@ function visuals.applyVisuals(trailName, trailVisuals)
     if frames == nil then
       log(INFO, string.format("custom-skirmish-trails: this game version has no menu button for the %s", trailName))
     else
-      if trailVisuals.buttonIdle ~= nil then
-        setFrame(frames.gm, frames.idle, trailVisuals.buttonIdle)
-      end
-      if trailVisuals.buttonHighlighted ~= nil then
-        setFrame(frames.gm, frames.highlighted, trailVisuals.buttonHighlighted)
-      end
+      -- loaded once the game has started (COM is ready then, as for aiSwapper's portraits)
+      hooks.registerHookCallback("afterInit", function()
+        if trailVisuals.buttonIdle ~= nil then
+          setFrame(frames.gm, frames.idle, trailVisuals.buttonIdle)
+        end
+        if trailVisuals.buttonHighlighted ~= nil then
+          setFrame(frames.gm, frames.highlighted, trailVisuals.buttonHighlighted)
+        end
+      end)
     end
   end
   if trailVisuals.background ~= nil then
