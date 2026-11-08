@@ -38,7 +38,7 @@
           "type": "string"
         },
         "trail_background": {
-          "description": "A .tgx file for the trail screen's background, in place of skirmish_trail.tgx, skirmish_trail2.tgx or SHCX_Map.tgx.",
+          "description": "The trail screen's background, in place of skirmish_trail.tgx, skirmish_trail2.tgx or SHCX_Map.tgx: a .tgx file, or a picture (.png, .jpg, .bmp, .gif) that the game turns into a .tgx once (kept in ucp/.cache). Use the size of the game's own file.",
           "type": "string"
         }
       },

@@ -104,7 +104,7 @@ Each trail can have a trail settings file (a .json file, set in the GUI next to 
 - `trail_type`: `First`, `Warchest` or `Extreme`.
 - `trail_title`, `trail_summary`: the texts under the trail's button in the skirmish menu.
 - `starting_year`: the year the first mission starts in.
-- `trail_visuals`: `trail_button_idle` and `trail_button_highlighted` (pictures, for example .png, for the trail's button in the skirmish menu) and `trail_background` (a .tgx file for the trail screen).
+- `trail_visuals`: `trail_button_idle` and `trail_button_highlighted` (pictures, for example .png, for the trail's button in the skirmish menu) and `trail_background` (the trail screen's background: a .tgx file, or a .png/.jpg/.bmp that the game turns into a .tgx once and keeps in `ucp/.cache`; use the size of the game's own file).
 - `trail_mission_positions`: a list of `{ "x": .., "y": .. }` points on the 800 x 600 trail screen, one per mission. Their number is the trail's number of missions (at most 50 for the first trail, 30 for the Warchest and the Extreme trail), and the game reads that many lines from the csv file.
 - `trail_csv_files`: the trail's csv file per game language, for example `{ "default": "trail.csv", "german": "trail-de.csv" }`.
 - `ai_character_mapping`: your own names for the AI keys (`"SK_RICHARD": "Alfonso"`). The csv file may use them in player1 to player8.

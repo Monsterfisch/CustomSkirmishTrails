@@ -133,7 +133,7 @@ local function initialize()
   local functions = {
     { "CreateDirectoryA", 2 }, { "FindFirstFileA", 2 }, { "FindNextFileA", 2 }, { "FindClose", 1 },
     { "GetModuleFileNameA", 3 }, { "CreateFileA", 7 }, { "WriteFile", 5 }, { "CloseHandle", 1 },
-    { "GetLastError", 0 },
+    { "GetLastError", 0 }, { "MultiByteToWideChar", 6 }, { "GetFileAttributesExA", 3 },
   }
   for _, entry in ipairs(functions) do
     local name, argumentCount = entry[1], entry[2]
@@ -201,7 +201,59 @@ function winfiles.listFiles(path, pattern)
   return names
 end
 
----Writes `contents` to the file `path`, replacing it.
+---Copies the bytes of a Lua string to `address`. Binary safe (zero bytes included), unlike
+---core.writeString.
+local COPY_CHUNK = 4096
+function winfiles.writeMemory(address, contents)
+  for offset = 1, #contents, COPY_CHUNK do
+    local last = math.min(offset + COPY_CHUNK - 1, #contents)
+    core.writeBytes(address + offset - 1, { contents:byte(offset, last) })
+  end
+end
+
+---A Lua function calling the stdcall function `name` exported by `dll` (loaded if needed).
+function winfiles.dllFunction(dll, name, argumentCount)
+  initialize()
+  local base = win.LoadLibraryA(setPath(dll)) & 0xFFFFFFFF
+  if base == 0 then
+    return nil, "cannot load " .. dll
+  end
+  local address = findExport(base, name, 0)
+  if address == nil then
+    return nil, dll .. " has no " .. name
+  end
+  local slot = core.allocate(4, true)
+  core.writeInteger(slot, address)
+  return stdcallThunk(slot, argumentCount)
+end
+
+---A new zero-terminated UTF-16 copy of the ANSI path `path` (for GDI+). Free it with core.deallocate.
+function winfiles.widePath(path)
+  initialize()
+  local absolute = winfiles.absolute(path)
+  local characters = win.MultiByteToWideChar(0, 0, setPath(absolute), -1, 0, 0)
+  if characters <= 0 then
+    return nil
+  end
+  local buffer = core.allocate(characters * 2 + 2, true)
+  win.MultiByteToWideChar(0, 0, setPath(absolute), -1, buffer, characters)
+  return buffer
+end
+
+---"size:time" of the file `path` (changes whenever the file does), or nil when it is missing.
+function winfiles.fileStamp(path)
+  initialize()
+  local data = core.allocate(36, true) -- WIN32_FILE_ATTRIBUTE_DATA
+  local stamp = nil
+  if win.GetFileAttributesExA(setPath(winfiles.absolute(path)), 0, data) ~= 0 then
+    stamp = string.format("%u:%u:%u", core.readInteger(data + 32) & 0xFFFFFFFF,
+      core.readInteger(data + 20) & 0xFFFFFFFF, core.readInteger(data + 24) & 0xFFFFFFFF)
+  end
+  core.deallocate(data)
+  return stamp
+end
+
+---Writes `contents` (any bytes) to the file `path`, replacing it.
 function winfiles.writeFile(path, contents)
   initialize()
   local absolute = winfiles.absolute(path)
@@ -219,7 +271,7 @@ function winfiles.writeFile(path, contents)
       dataBufferSize = math.max(#contents + 1, 64 * 1024)
       dataBuffer = core.allocate(dataBufferSize, true)
     end
-    core.writeString(dataBuffer, contents)
+    winfiles.writeMemory(dataBuffer, contents)
     if win.WriteFile(handle, dataBuffer, #contents, writtenBuffer, 0) == 0
       or core.readInteger(writtenBuffer) ~= #contents then
       ok, err = false, string.format("cannot write %s (%s)", absolute, lastError())

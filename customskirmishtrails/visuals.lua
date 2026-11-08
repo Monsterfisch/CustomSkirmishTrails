@@ -2,7 +2,10 @@
 -- menu (idle and highlighted picture), the trail screen's background, and the trail's title
 -- and summary under the button.
 
+local tgx = require("customskirmishtrails.tgx")
+
 local visuals = {}
+local backgroundTgx
 
 -- The skirmish menu's trail buttons are image buttons: the idle picture is the frame shown,
 -- the highlighted one the next frame. Stronghold Crusader shows the first and the Warchest
@@ -80,6 +83,30 @@ local function registerBackgroundOverride()
   overrideRegistered = true
 end
 
+---The .tgx file to show for a trail_background: a .tgx is used as it is, any other picture
+---(.png, .jpg, .bmp, .gif) is turned into a .tgx in ucp/.cache first.
+function backgroundTgx(trailName, path)
+  local original = "gfx/" .. BACKGROUND_FILES[trailName]
+  local result, width, height = path, nil, nil
+  if not path:lower():match("%.tgx$") then
+    local ok, made, madeWidth, madeHeight = pcall(tgx.cached, path,
+      string.format("ucp/.cache/custom-skirmish-trails-background-%s.tgx", trailName))
+    if not ok then
+      log(WARNING, string.format("custom-skirmish-trails: the trail background stays: %s", tostring(made)))
+      return nil
+    end
+    result, width, height = made, madeWidth, madeHeight
+  else
+    width, height = tgx.size(path)
+  end
+  local originalWidth, originalHeight = tgx.size(original)
+  if width ~= nil and originalWidth ~= nil and (width ~= originalWidth or height ~= originalHeight) then
+    log(WARNING, string.format("custom-skirmish-trails: %s is %d x %d, the game's %s is %d x %d",
+      path, width, height, original, originalWidth, originalHeight))
+  end
+  return result
+end
+
 ---Applies the trail_visuals of a trail settings file.
 function visuals.applyVisuals(trailName, trailVisuals)
   if trailVisuals == nil then
@@ -99,8 +126,11 @@ function visuals.applyVisuals(trailName, trailVisuals)
     end
   end
   if trailVisuals.background ~= nil then
-    backgrounds[BACKGROUND_FILES[trailName]] = trailVisuals.background
-    registerBackgroundOverride()
+    local background = backgroundTgx(trailName, trailVisuals.background)
+    if background ~= nil then
+      backgrounds[BACKGROUND_FILES[trailName]] = background
+      registerBackgroundOverride()
+    end
   end
 end
 
