@@ -14,6 +14,7 @@ local patches = require("customskirmishtrails.patches")
 local settingsModule = require("customskirmishtrails.settings")
 local visuals = require("customskirmishtrails.visuals")
 local menutext = require("customskirmishtrails.menutext")
+local textsModule = require("customskirmishtrails.texts")
 local conversion = require("customskirmishtrails.conversion")
 local winfiles = require("customskirmishtrails.winfiles")
 
@@ -100,9 +101,11 @@ local function insertPostSkirmishSetupDetour()
   end, core.AOBScan("A3 ? ? ? ? A3 ? ? ? ? A3 ? ? ? ? A3 ? ? ? ? A3 ? ? ? ? A3 ? ? ? ? A3 ? ? ? ? A3 ? ? ? ? A3 ? ? ? ? A3 ? ? ? ? A3 ? ? ? ? A3 ? ? ? ? A3 ? ? ? ? A3 ? ? ? ? 89 44 24 10 "), 5)
 end
 
-local function applyTrail(trailName, path, missions, limit)
+local function applyTrail(trailName, path, missions, limit, languageTexts)
   local result, err = cst_io.readCSV(path, limit + 1) -- one for the header
   if result == nil then error(err) end
+  -- the game language's texts over the default texts of the csv
+  textsModule.apply(languageTexts, result)
 
   local f = io.open(string.format("ucp/.cache/custom-skirmish-trails-config-%s.yml", trailName), 'w')
   if f ~= nil then
@@ -270,8 +273,8 @@ local function runConversions(config, trailSettings)
   local requests = nil
   for _, trail in ipairs(TRAILS) do
     local request = trailConfig(config, trail).conversion
-    if type(request) == "table" and (request.action == "export" or request.action == "import")
-      and nonEmpty(request.request) then
+    if type(request) == "table" and (request.action == "export" or request.action == "import"
+      or request.action == "texts") and nonEmpty(request.request) then
       requests = requests or readRequests()
       local previous = requests[trail.key]
       if type(previous) ~= "table" or previous.request ~= request.request then
@@ -282,6 +285,28 @@ local function runConversions(config, trailSettings)
         local results = {}
         if #files == 0 then
           table.insert(results, "no csv file is set for this trail")
+        end
+        if request.action == "texts" then
+          -- language csv files -> language text files next to the default csv
+          local base = (settings ~= nil and settings.csvFiles ~= nil and settings.csvFiles.default) or default
+          local languageCsvs = {}
+          if settings ~= nil and settings.csvFiles ~= nil then
+            for language, file in pairs(settings.csvFiles) do
+              if language ~= "default" then languageCsvs[language] = file end
+            end
+          else
+            for language, file in pairs(languages) do languageCsvs[language] = file end
+          end
+          if not nonEmpty(base) then
+            table.insert(results, "there is no default csv file for this trail")
+          else
+            local okTexts, lines = pcall(textsModule.makeFromCsvs, base, languageCsvs)
+            for _, line in ipairs(okTexts and lines or { tostring(lines) }) do
+              log(INFO, "custom-skirmish-trails: " .. tostring(line))
+              table.insert(results, tostring(line))
+            end
+          end
+          files = {}
         end
         for _, file in ipairs(files) do
           local ok, done, message
@@ -320,6 +345,7 @@ return {
       cst_io.setStrictness("warning")
     end
     settingsModule.setStrict(strict)
+    textsModule.setStrict(strict)
 
     local _, skirmishTrailMissions, extremeTrailMissions, warchestTrailMissions = utils.AOBExtract("8D ? I(? ? ? ?) 75 08 8D ? I(? ? ? ?) EB 0B 83 F9 01 75 06 8D ? I(? ? ? ?) 53")
     local missionTables = {
@@ -413,10 +439,22 @@ return {
 
       for _, trail in ipairs(TRAILS) do
         local trailSettingsForTexts = trailSettings[trail.name]
+        -- the game language's text file, if the trail settings file names one
+        local languageTexts = nil
         if trailSettingsForTexts ~= nil then
+          local textFile = textsModule.fileFor(trailSettingsForTexts.textFiles, language)
+          if textFile ~= nil then
+            languageTexts = textsModule.load(textFile)
+            if languageTexts ~= nil then
+              log(INFO, string.format("custom-skirmish-trails: %s trail texts (%s): %s", trail.type, language, textFile))
+            end
+          elseif trailSettingsForTexts.textFiles ~= nil then
+            log(INFO, string.format("custom-skirmish-trails: no %s text file for the %s trail; the default texts are shown",
+              language, trail.type))
+          end
           local okTexts, textError = pcall(menutext.apply, trail.name,
-            settingsModule.localized(trailSettingsForTexts.title, language),
-            settingsModule.localized(trailSettingsForTexts.summary, language))
+            (languageTexts and languageTexts.title) or settingsModule.localized(trailSettingsForTexts.title, language),
+            (languageTexts and languageTexts.summary) or settingsModule.localized(trailSettingsForTexts.summary, language))
           if not okTexts then
             log(WARNING, "custom-skirmish-trails: trail title and summary: " .. tostring(textError))
           end
@@ -426,7 +464,7 @@ return {
         if nonEmpty(path) then
           log(INFO, string.format("custom-skirmish-trails: %s trail (%s): %s", trail.type, language, path))
           local okTrail, trailError = pcall(applyTrail, trail.name, path, missionTables[trail.name],
-            missionCounts[trail.name])
+            missionCounts[trail.name], languageTexts)
           if not okTrail then
             log(WARNING, string.format("custom-skirmish-trails: the trail csv file %s cannot be used, so the %s "
               .. "trail keeps the game's own missions: %s", path, trail.type, tostring(trailError)))

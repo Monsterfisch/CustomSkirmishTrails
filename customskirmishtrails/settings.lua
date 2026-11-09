@@ -172,6 +172,37 @@ local function readCsvFiles(path, directory, value)
   return count > 0 and files or nil
 end
 
+---trail_text_files: a folder of <language>.json files, or a map of languages to files.
+local function readTextFiles(path, directory, value)
+  if value == nil then
+    return nil
+  end
+  if type(value) == "string" then
+    if value == "" then
+      return nil
+    end
+    local folder = settings.resolveRelative(directory, value)
+    if not folder:match("[/\\]$") then
+      folder = folder .. "/"
+    end
+    return { folder = folder }
+  end
+  if type(value) ~= "table" then
+    warn(path, "trail_text_files must be a folder or map languages to language files")
+    return nil
+  end
+  local files, count = {}, 0
+  for language, file in pairs(value) do
+    if type(language) == "string" and nonEmptyString(file) then
+      files[language:lower()] = settings.resolveRelative(directory, file)
+      count = count + 1
+    elseif file ~= "" then
+      warn(path, "trail_text_files entry '%s' is not a file name", tostring(language))
+    end
+  end
+  return count > 0 and { files = files } or nil
+end
+
 local function readAiMapping(path, value)
   local mapping = {}
   for _, key in ipairs(settings.AI_KEYS) do
@@ -264,6 +295,7 @@ function settings.load(path, trailName)
 
   result.positions = readPositions(path, data.trail_mission_positions, trailName)
   result.csvFiles = readCsvFiles(path, directory, data.trail_csv_files)
+  result.textFiles = readTextFiles(path, directory, data.trail_text_files)
   result.aiMapping, result.hasAiMapping = readAiMapping(path, data.ai_character_mapping)
 
   -- what falls back to the game's own values (strict mode only)
@@ -297,6 +329,9 @@ function settings.load(path, trailName)
     info(path, "trail_csv_files is not set; the csv files set in the GUI are used")
   elseif result.csvFiles.default == nil then
     info(path, "trail_csv_files has no \"default\"; game languages without their own file use the csv file set in the GUI")
+  end
+  if result.textFiles == nil then
+    info(path, "trail_text_files is not set; the texts come from the csv files")
   end
   if not result.hasAiMapping then
     info(path, "ai_character_mapping is not set; Export and Import keep the AI keys (SK_RAT, ...)")

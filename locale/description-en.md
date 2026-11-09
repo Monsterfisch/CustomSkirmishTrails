@@ -111,6 +111,9 @@ Each trail can have a trail settings file (a .json file, set in the GUI next to 
 
 Relative paths in the file are taken from the file's own folder.
 
+### Language text files
+With `trail_text_files` in the trail settings file, a trail needs only one csv file: it holds the gameplay data and the default texts, and each further language is a small JSON file with only its texts (`texts/german.json`, ...). A mission is found by its number, or by the optional `mission_id` column when it has one (that keeps translations right when missions are reordered). Texts a language file does not have show the csv's text. The CSV data panel's "Make language text files" button writes these files from existing language csv files (and `texts/_template.json` with the default texts for translators); a language csv whose gameplay data differs from the default csv is left out and reported.
+
 ### Csv files per language
 In the GUI, a trail's csv files (default and per game language) are in the collapsible "Csv files" group. Normally the trail settings file names them instead. The game uses the one for its language and the first one for every other language. A trail settings file with `trail_csv_files` takes the place of these.
 

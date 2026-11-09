@@ -118,6 +118,20 @@
         "type": "string"
       }
     },
+    "trail_text_files": {
+      "description": "Texts per game language, so the csv file holds only one (the default) set of texts. Either a folder with one <language>.json file per language (english.json, german.json, ...), or an object of languages to files. A language file has \"trail_title\", \"trail_summary\" and \"missions\": { \"<mission number or mission_id>\": { \"mission_name\": ..., \"text_description_line_01\": ..., \"player2_name\": ... } }. Texts it does not have keep the csv's text. \"Make language text files\" in the GUI's CSV data panel writes these files from language csv files.",
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        }
+      ]
+    },
     "ai_character_mapping": {
       "description": "Names for the AI keys of the csv columns player1 to player8. Export CSV Data writes these names into the mission JSON files and Import CSV Data turns them back into the keys. The csv file may use them too. Each name must be unique and must not be another AI's key.",
       "type": "object",

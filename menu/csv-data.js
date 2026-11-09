@@ -17,11 +17,11 @@ function csvDataText(id, text) {
 
 function csvDataRequest(action) {
   csvDataPending = { action, request: new Date().toISOString() };
-  for (const id of ['export', 'import']) {
+  for (const id of ['export', 'import', 'texts']) {
     const button = document.getElementById(id);
     if (button) button.classList.toggle('chosen', id === action);
   }
-  const word = action === 'export' ? 'Export' : 'Import';
+  const word = { export: 'Export', import: 'Import', texts: 'Making language text files' }[action];
   csvDataText(
     'pending',
     `${word} requested. Press "Save and close", then start the game once to run it.`,
@@ -43,8 +43,8 @@ async function csvDataShowLast(trail) {
     return;
   }
   if (!status || !status.action) return;
-  const word = status.action === 'export' ? 'Export' : 'Import';
-  const lines = [`Last ${word.toLowerCase()} (${status.time || 'unknown time'}):`];
+  const word = { export: 'export', import: 'import', texts: 'run of "Make language text files"' }[status.action] || status.action;
+  const lines = [`Last ${word} (${status.time || 'unknown time'}):`];
   for (const line of status.results || []) lines.push(`- ${line}`);
   csvDataText('last', lines.join('\n'));
 }
@@ -56,6 +56,8 @@ addEventListener('INIT_DONE', async () => {
   const importButton = document.getElementById('import');
   if (exportButton) exportButton.onclick = () => csvDataRequest('export');
   if (importButton) importButton.onclick = () => csvDataRequest('import');
+  const textsButton = document.getElementById('texts');
+  if (textsButton) textsButton.onclick = () => csvDataRequest('texts');
 
   try {
     const config = await HOST_FUNCTIONS.getCurrentConfig();
