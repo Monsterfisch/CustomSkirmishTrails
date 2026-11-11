@@ -1,0 +1,58 @@
+{
+  "format": 1,
+  "map_name": "The Valley",
+  "mission_name": "The Descent",
+  "text_description": [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+  ],
+  "advantage": "ai_small",
+  "start_mode": "crusader",
+  "players": [
+    {
+      "start_position": 7,
+      "team": 1,
+      "aiv_type": 0
+    },
+    {
+      "ai": "SK_PIG",
+      "start_position": 1,
+      "team": 1,
+      "aiv_type": 6
+    },
+    {
+      "ai": "SK_SNAKE",
+      "start_position": 5,
+      "team": 2,
+      "aiv_type": 4
+    },
+    {
+      "ai": "SK_SNAKE",
+      "start_position": 8,
+      "team": 2,
+      "aiv_type": 5
+    },
+    {
+      "ai": "SK_RICHARD",
+      "start_position": 6,
+      "team": 2,
+      "aiv_type": 5
+    },
+    {
+      "ai": "SK_RICHARD",
+      "start_position": 4,
+      "team": 2,
+      "aiv_type": 6
+    }
+  ],
+  "producible": {},
+  "recruitable": {},
+  "resources": {},
+  "tradeable": {}
+}

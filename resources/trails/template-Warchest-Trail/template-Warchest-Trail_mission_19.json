@@ -1,0 +1,61 @@
+{
+  "format": 1,
+  "map_name": "Lake Qaddas",
+  "mission_name": "Choke Zones",
+  "text_description": [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+  ],
+  "advantage": "neutral",
+  "start_mode": "deathmatch",
+  "players": [
+    {
+      "start_position": 1,
+      "team": 0,
+      "aiv_type": 0
+    },
+    {
+      "ai": "SK_ABBOT",
+      "start_position": 5,
+      "team": 1,
+      "aiv_type": 2
+    },
+    {
+      "ai": "SK_PHILLIP",
+      "start_position": 6,
+      "team": 1,
+      "aiv_type": 2
+    },
+    {
+      "ai": "SK_EMIR",
+      "start_position": 3,
+      "team": 1,
+      "aiv_type": 6
+    },
+    {
+      "ai": "SK_NIZAR",
+      "start_position": 4,
+      "team": 1,
+      "aiv_type": 1
+    },
+    {
+      "ai": "SK_SHERIFF",
+      "start_position": 2,
+      "team": 1,
+      "aiv_type": 5
+    }
+  ],
+  "producible": {},
+  "recruitable": {},
+  "resources": {},
+  "tradeable": {},
+  "extra": {
+    "player1": "SK_HUMAN"
+  }
+}

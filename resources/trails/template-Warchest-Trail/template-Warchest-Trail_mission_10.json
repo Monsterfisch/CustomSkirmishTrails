@@ -1,0 +1,44 @@
+{
+  "format": 1,
+  "map_name": "Halys River",
+  "mission_name": "Mangonel City",
+  "text_description": [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+  ],
+  "advantage": "neutral",
+  "start_mode": "normal",
+  "players": [
+    {
+      "start_position": 1,
+      "team": 0,
+      "aiv_type": 0
+    },
+    {
+      "ai": "SK_EMIR",
+      "start_position": 3,
+      "team": 1,
+      "aiv_type": 4
+    },
+    {
+      "ai": "SK_EMIR",
+      "start_position": 4,
+      "team": 1,
+      "aiv_type": 2
+    }
+  ],
+  "producible": {},
+  "recruitable": {},
+  "resources": {},
+  "tradeable": {},
+  "extra": {
+    "player1": "SK_HUMAN",
+    "aiv_type4": "3"
+  }
+}

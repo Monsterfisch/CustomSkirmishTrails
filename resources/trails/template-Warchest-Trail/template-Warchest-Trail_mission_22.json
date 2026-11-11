@@ -1,0 +1,55 @@
+{
+  "format": 1,
+  "map_name": "Broken Dune",
+  "mission_name": "Natural Defence",
+  "text_description": [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+  ],
+  "advantage": "ai_large",
+  "start_mode": "normal",
+  "players": [
+    {
+      "start_position": 1,
+      "team": 1,
+      "aiv_type": 0
+    },
+    {
+      "ai": "SK_FREDERICK",
+      "start_position": 4,
+      "team": 1,
+      "aiv_type": 5
+    },
+    {
+      "ai": "SK_PIG",
+      "start_position": 2,
+      "team": 2,
+      "aiv_type": 2
+    },
+    {
+      "ai": "SK_EMIR",
+      "start_position": 3,
+      "team": 2,
+      "aiv_type": 6
+    },
+    {
+      "ai": "SK_NIZAR",
+      "start_position": 5,
+      "team": 2,
+      "aiv_type": 4
+    }
+  ],
+  "producible": {},
+  "recruitable": {},
+  "resources": {},
+  "tradeable": {},
+  "extra": {
+    "player1": "SK_HUMAN"
+  }
+}

@@ -1,0 +1,154 @@
+{
+  "missions": {
+    "1": {
+      "mission_name": "Arrival"
+    },
+    "2": {
+      "mission_name": "Setting Out"
+    },
+    "3": {
+      "mission_name": "This Dusty Land"
+    },
+    "4": {
+      "mission_name": "An Old Friend"
+    },
+    "5": {
+      "mission_name": "The Arabian Adventure"
+    },
+    "6": {
+      "mission_name": "The Endless Desert"
+    },
+    "7": {
+      "mission_name": "Greek Fire"
+    },
+    "8": {
+      "mission_name": "Sands Of Time"
+    },
+    "9": {
+      "mission_name": "The Oasis"
+    },
+    "10": {
+      "mission_name": "Land Of Palms"
+    },
+    "11": {
+      "mission_name": "Rocky Valley"
+    },
+    "12": {
+      "mission_name": "The Creek"
+    },
+    "13": {
+      "mission_name": "Heat Of the Desert"
+    },
+    "14": {
+      "mission_name": "Land Of the Arab"
+    },
+    "15": {
+      "mission_name": "Lions Mane"
+    },
+    "16": {
+      "mission_name": "The Desert Hunters"
+    },
+    "17": {
+      "mission_name": "Realm Of the Camels"
+    },
+    "18": {
+      "mission_name": "A Barren Land"
+    },
+    "19": {
+      "mission_name": "A Date with History"
+    },
+    "20": {
+      "mission_name": "The Saracen"
+    },
+    "21": {
+      "mission_name": "The Desert Wind"
+    },
+    "22": {
+      "mission_name": "Red Beak"
+    },
+    "23": {
+      "mission_name": "Flatland"
+    },
+    "24": {
+      "mission_name": "Death in the Dunes"
+    },
+    "25": {
+      "mission_name": "The Forgotten"
+    },
+    "26": {
+      "mission_name": "Vultures Claw"
+    },
+    "27": {
+      "mission_name": "Arabian Nights"
+    },
+    "28": {
+      "mission_name": "A Place of Rest"
+    },
+    "29": {
+      "mission_name": "Rivers of Blood"
+    },
+    "30": {
+      "mission_name": "Eye of the Camel"
+    },
+    "31": {
+      "mission_name": "Warning Drums"
+    },
+    "32": {
+      "mission_name": "The Plains of Atum"
+    },
+    "33": {
+      "mission_name": "Misty River"
+    },
+    "34": {
+      "mission_name": "The Coconut Grove"
+    },
+    "35": {
+      "mission_name": "Moonlight Pass"
+    },
+    "36": {
+      "mission_name": "The Descent"
+    },
+    "37": {
+      "mission_name": "Inferno"
+    },
+    "38": {
+      "mission_name": "The Assassins"
+    },
+    "39": {
+      "mission_name": "Red Skies"
+    },
+    "40": {
+      "mission_name": "The Dunes"
+    },
+    "41": {
+      "mission_name": "Thunder Hill"
+    },
+    "42": {
+      "mission_name": "Hope Valley"
+    },
+    "43": {
+      "mission_name": "The Desert Warriors"
+    },
+    "44": {
+      "mission_name": "A Plague of Sand"
+    },
+    "45": {
+      "mission_name": "Sandstorm"
+    },
+    "46": {
+      "mission_name": "Nightmare"
+    },
+    "47": {
+      "mission_name": "The Lost Sea"
+    },
+    "48": {
+      "mission_name": "Hades"
+    },
+    "49": {
+      "mission_name": "The Mother of All Wars"
+    },
+    "50": {
+      "mission_name": "Final Victory"
+    }
+  }
+}

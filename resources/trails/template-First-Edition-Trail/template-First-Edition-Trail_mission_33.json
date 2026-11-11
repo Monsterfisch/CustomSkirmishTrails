@@ -1,0 +1,40 @@
+{
+  "format": 1,
+  "map_name": "Oasis Struggle",
+  "mission_name": "Misty River",
+  "text_description": [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+  ],
+  "advantage": "ai_large",
+  "start_mode": "crusader",
+  "players": [
+    {
+      "start_position": 6,
+      "team": 0,
+      "aiv_type": 0
+    },
+    {
+      "ai": "SK_RICHARD",
+      "start_position": 1,
+      "team": 1,
+      "aiv_type": 2
+    },
+    {
+      "ai": "SK_RICHARD",
+      "start_position": 2,
+      "team": 1,
+      "aiv_type": 4
+    }
+  ],
+  "producible": {},
+  "recruitable": {},
+  "resources": {},
+  "tradeable": {}
+}

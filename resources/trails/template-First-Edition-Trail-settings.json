@@ -1,12 +1,8 @@
 {
   "$schema": "../trail-settings.schema.json",
   "trail_type": "First",
-  "trail_title": {
-    "default": ""
-  },
-  "trail_summary": {
-    "default": ""
-  },
+  "trail_title": "",
+  "trail_summary": "",
   "starting_year": 1100,
   "trail_visuals": {
     "trail_button_idle": "",
@@ -65,9 +61,11 @@
     { "x": 91, "y": 452 },
     { "x": 111, "y": 517 }
   ],
-  "trail_csv_files": {
-    "default": "template-First-Edition-Trail.csv"
+  "trail_missions": {
+    "base_name": "template-First-Edition-Trail",
+    "data_mode": "csv"
   },
+  "trail_text_files": "texts/template-First-Edition-Trail/",
   "ai_character_mapping": {
     "SK_RAT": "SK_RAT",
     "SK_SNAKE": "SK_SNAKE",

@@ -87,41 +87,6 @@ local function integer(value)
   return math.tointeger(value)
 end
 
----A text given per game language: { "default": "...", "german": "..." }. A plain string counts
----as the default. Returns a map of lower-case languages to texts, or nil.
-local function readLocalizedText(path, key, value)
-  if value == nil then
-    return nil
-  end
-  if type(value) == "string" then
-    return value ~= "" and { default = value } or nil
-  end
-  if type(value) ~= "table" then
-    warn(path, "%s must be a text or an object of texts per language", key)
-    return nil
-  end
-  local texts, count = {}, 0
-  for language, text in pairs(value) do
-    if type(language) == "string" and nonEmptyString(text) then
-      texts[language:lower()] = text
-      count = count + 1
-    elseif text ~= "" then
-      warn(path, "%s entry '%s' is not a text", key, tostring(language))
-    end
-  end
-  return count > 0 and texts or nil
-end
-
----The text of a per-language map for `language`, falling back to "default" (and English for
----the American game).
-function settings.localized(texts, language)
-  if texts == nil then
-    return nil
-  end
-  language = (language or ""):lower()
-  return texts[language] or (language == "american" and texts.english) or texts.default
-end
-
 local function readPositions(path, value, trailName)
   if value == nil then
     return nil
@@ -152,24 +117,34 @@ local function readPositions(path, value, trailName)
   return positions
 end
 
-local function readCsvFiles(path, directory, value)
+settings.DATA_MODES = { csv = true, json_folder = true, automatic = true }
+
+---trail_missions: { "base_name": "missions/trail", "data_mode": "csv" }. base_name names both the
+---csv file (<base_name>.csv) and the folder of mission files (<base_name>/<name>_mission_NN.json).
+local function readMissions(path, directory, value)
   if value == nil then
     return nil
   end
-  if type(value) ~= "table" then
-    warn(path, "trail_csv_files must map languages to csv files")
+  if type(value) ~= "table" or not nonEmptyString(value.base_name) then
+    warn(path, "trail_missions needs a \"base_name\" (the csv file without .csv)")
     return nil
   end
-  local files, count = {}, 0
-  for language, file in pairs(value) do
-    if type(language) == "string" and nonEmptyString(file) then
-      files[language:lower()] = settings.resolveRelative(directory, file)
-      count = count + 1
-    elseif file ~= "" then
-      warn(path, "trail_csv_files entry '%s' is not a file name", tostring(language))
-    end
+  local mode = value.data_mode
+  if mode == nil or mode == "" then
+    mode = "csv"
+    info(path, "trail_missions.data_mode is not set; \"csv\" is used")
+  elseif not settings.DATA_MODES[mode] then
+    warn(path, "trail_missions.data_mode must be csv, json_folder or automatic, not '%s'; \"csv\" is used", tostring(mode))
+    mode = "csv"
   end
-  return count > 0 and files or nil
+  local base = settings.resolveRelative(directory, (value.base_name:gsub("%.[cC][sS][vV]$", "")))
+  base = base:gsub("[/\\]+$", "")
+  return {
+    csv = base .. ".csv",
+    folder = base,
+    name = base:match("([^/\\]+)$") or base,
+    mode = mode,
+  }
 end
 
 ---trail_text_files: a folder of <language>.json files, or a map of languages to files.
@@ -267,8 +242,14 @@ function settings.load(path, trailName)
   local directory = settings.directoryOf(path)
   local result = { path = path, trail = trailName }
 
-  result.title = readLocalizedText(path, "trail_title", data.trail_title)
-  result.summary = readLocalizedText(path, "trail_summary", data.trail_summary)
+  for key, field in pairs({ trail_title = "title", trail_summary = "summary" }) do
+    local value = data[key]
+    if nonEmptyString(value) then
+      result[field] = value
+    elseif value ~= nil and value ~= "" then
+      warn(path, "%s must be a text", key)
+    end
+  end
 
   if data.starting_year ~= nil then
     local year = integer(data.starting_year)
@@ -294,7 +275,7 @@ function settings.load(path, trailName)
   end
 
   result.positions = readPositions(path, data.trail_mission_positions, trailName)
-  result.csvFiles = readCsvFiles(path, directory, data.trail_csv_files)
+  result.missions = readMissions(path, directory, data.trail_missions)
   result.textFiles = readTextFiles(path, directory, data.trail_text_files)
   result.aiMapping, result.hasAiMapping = readAiMapping(path, data.ai_character_mapping)
 
@@ -303,14 +284,10 @@ function settings.load(path, trailName)
     info(path, "trail_type is not set; the file is used for the trail it is set for in the GUI")
   end
   if result.title == nil then
-    info(path, "trail_title is not set; the game's own title is shown")
-  elseif result.title.default == nil then
-    info(path, "trail_title has no \"default\"; game languages without their own title show the game's title")
+    info(path, "trail_title is not set; the game's own title is shown (unless a language file has one)")
   end
   if result.summary == nil then
-    info(path, "trail_summary is not set; the game's own summary is shown")
-  elseif result.summary.default == nil then
-    info(path, "trail_summary has no \"default\"; game languages without their own summary show the game's summary")
+    info(path, "trail_summary is not set; the game's own summary is shown (unless a language file has one)")
   end
   if result.startingYear == nil then
     info(path, "starting_year is not set; the trail starts in the game's own year")
@@ -325,13 +302,11 @@ function settings.load(path, trailName)
   if result.positions == nil then
     info(path, "trail_mission_positions is not set; the trail keeps the game's mission count and button positions")
   end
-  if result.csvFiles == nil then
-    info(path, "trail_csv_files is not set; the csv files set in the GUI are used")
-  elseif result.csvFiles.default == nil then
-    info(path, "trail_csv_files has no \"default\"; game languages without their own file use the csv file set in the GUI")
+  if result.missions == nil then
+    info(path, "trail_missions is not set; the csv file set in the GUI is used")
   end
   if result.textFiles == nil then
-    info(path, "trail_text_files is not set; the texts come from the csv files")
+    info(path, "trail_text_files is not set; every game language shows the texts of the mission data")
   end
   if not result.hasAiMapping then
     info(path, "ai_character_mapping is not set; Export and Import keep the AI keys (SK_RAT, ...)")
@@ -349,58 +324,6 @@ function settings.load(path, trailName)
       .. "the game's own values. Turn on strict mode (Developer settings) to see them.", problems[path], path))
   end
   return result
-end
-
----The csv file to use for the game language `language`: the settings file's trail_csv_files
----win when they are given (language, then "default"); otherwise the language files set in the
----GUI, then the default csv file.
-function settings.chooseCsv(trailSettings, guiLanguageFiles, guiDefault, language)
-  language = (language or ""):lower()
-  if trailSettings ~= nil and trailSettings.csvFiles ~= nil then
-    return trailSettings.csvFiles[language]
-      or (language == "american" and trailSettings.csvFiles.english)
-      or trailSettings.csvFiles.default or guiDefault
-  end
-  local fromGui = guiLanguageFiles ~= nil and guiLanguageFiles[language] or nil
-  if nonEmptyString(fromGui) then
-    return fromGui
-  end
-  if language == "american" and guiLanguageFiles ~= nil and nonEmptyString(guiLanguageFiles.english) then
-    return guiLanguageFiles.english
-  end
-  return guiDefault
-end
-
----Every csv file a trail can use, each once: the default one and every language's.
-function settings.allCsvFiles(trailSettings, guiLanguageFiles, guiDefault)
-  local files, seen = {}, {}
-  local function add(path)
-    if nonEmptyString(path) and not seen[path] then
-      seen[path] = true
-      table.insert(files, path)
-    end
-  end
-  add(guiDefault)
-  if trailSettings ~= nil and trailSettings.csvFiles ~= nil then
-    local languages = {}
-    for language in pairs(trailSettings.csvFiles) do
-      table.insert(languages, language)
-    end
-    table.sort(languages)
-    for _, language in ipairs(languages) do
-      add(trailSettings.csvFiles[language])
-    end
-  elseif guiLanguageFiles ~= nil then
-    local languages = {}
-    for language in pairs(guiLanguageFiles) do
-      table.insert(languages, language)
-    end
-    table.sort(languages)
-    for _, language in ipairs(languages) do
-      add(guiLanguageFiles[language])
-    end
-  end
-  return files
 end
 
 return settings

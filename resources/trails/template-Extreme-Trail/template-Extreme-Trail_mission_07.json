@@ -1,0 +1,62 @@
+{
+  "format": 1,
+  "map_name": "Coastal_Trap",
+  "mission_name": "Coastal_Trap",
+  "text_description": [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+  ],
+  "advantage": "neutral",
+  "start_mode": "deathmatch",
+  "players": [
+    {
+      "start_position": 1,
+      "team": 0,
+      "aiv_type": 0
+    },
+    {
+      "ai": "SK_PHILLIP",
+      "start_position": 2,
+      "team": 1,
+      "aiv_type": 1
+    },
+    {
+      "ai": "SK_MARSHAL",
+      "start_position": 3,
+      "team": 1,
+      "aiv_type": 3
+    },
+    {
+      "ai": "SK_RAT",
+      "start_position": 4,
+      "team": 1,
+      "aiv_type": 5
+    },
+    {
+      "ai": "SK_PHILLIP",
+      "start_position": 5,
+      "team": 1,
+      "aiv_type": 1
+    },
+    {
+      "ai": "SK_SULTAN",
+      "start_position": 6,
+      "team": 1,
+      "aiv_type": 6
+    }
+  ],
+  "producible": {},
+  "recruitable": {},
+  "resources": {},
+  "tradeable": {},
+  "extra": {
+    "aiv_type7": "4",
+    "aiv_type8": "1"
+  }
+}

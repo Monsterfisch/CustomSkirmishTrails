@@ -1,0 +1,52 @@
+{
+  "format": 1,
+  "map_name": "Three_Little_Pigs",
+  "mission_name": "Three_Little_Pigs",
+  "text_description": [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+  ],
+  "advantage": "ai_large",
+  "start_mode": "deathmatch",
+  "players": [
+    {
+      "start_position": 1,
+      "team": 1,
+      "aiv_type": 7
+    },
+    {
+      "ai": "SK_PIG",
+      "start_position": 2,
+      "team": 2,
+      "aiv_type": 2
+    },
+    {
+      "ai": "SK_PIG",
+      "start_position": 3,
+      "team": 2,
+      "aiv_type": 5
+    },
+    {
+      "ai": "SK_PIG",
+      "start_position": 4,
+      "team": 2,
+      "aiv_type": 3
+    }
+  ],
+  "producible": {},
+  "recruitable": {},
+  "resources": {},
+  "tradeable": {},
+  "extra": {
+    "aiv_type5": "5",
+    "aiv_type6": "2",
+    "aiv_type7": "3",
+    "aiv_type8": "3"
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "format": 1,
+  "map_name": "Lionheart",
+  "mission_name": "Lionheart",
+  "text_description": [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+  ],
+  "advantage": "ai_large",
+  "start_mode": "normal",
+  "players": [
+    {
+      "start_position": 1,
+      "team": 1,
+      "aiv_type": 7
+    },
+    {
+      "ai": "SK_RICHARD",
+      "start_position": 2,
+      "team": 2,
+      "aiv_type": 1
+    }
+  ],
+  "producible": {},
+  "recruitable": {},
+  "resources": {},
+  "tradeable": {},
+  "extra": {
+    "player3": "",
+    "start_position3": "7",
+    "team3": "2",
+    "aiv_type6": "1",
+    "aiv_type7": "3",
+    "aiv_type8": "5"
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "format": 1,
+  "map_name": "The Guardians",
+  "mission_name": "Moonlight Pass",
+  "text_description": [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+  ],
+  "advantage": "ai_small",
+  "start_mode": "deathmatch",
+  "players": [
+    {
+      "start_position": 2,
+      "team": 0,
+      "aiv_type": 0
+    },
+    {
+      "ai": "SK_WOLF",
+      "start_position": 8,
+      "team": 1,
+      "aiv_type": 5
+    },
+    {
+      "ai": "SK_WOLF",
+      "start_position": 7,
+      "team": 1,
+      "aiv_type": 6
+    }
+  ],
+  "producible": {},
+  "recruitable": {},
+  "resources": {},
+  "tradeable": {}
+}

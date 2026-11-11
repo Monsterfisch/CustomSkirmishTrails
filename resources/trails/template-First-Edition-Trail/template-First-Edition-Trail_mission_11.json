@@ -1,0 +1,46 @@
+{
+  "format": 1,
+  "map_name": "The Valley",
+  "mission_name": "Rocky Valley",
+  "text_description": [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+  ],
+  "advantage": "human_small",
+  "start_mode": "normal",
+  "players": [
+    {
+      "start_position": 4,
+      "team": 0,
+      "aiv_type": 0
+    },
+    {
+      "ai": "SK_PIG",
+      "start_position": 7,
+      "team": 1,
+      "aiv_type": 0
+    },
+    {
+      "ai": "SK_PIG",
+      "start_position": 3,
+      "team": 1,
+      "aiv_type": 1
+    },
+    {
+      "ai": "SK_PIG",
+      "start_position": 5,
+      "team": 1,
+      "aiv_type": 2
+    }
+  ],
+  "producible": {},
+  "recruitable": {},
+  "resources": {},
+  "tradeable": {}
+}

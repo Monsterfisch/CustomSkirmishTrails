@@ -134,6 +134,7 @@ local function initialize()
     { "CreateDirectoryA", 2 }, { "FindFirstFileA", 2 }, { "FindNextFileA", 2 }, { "FindClose", 1 },
     { "GetModuleFileNameA", 3 }, { "CreateFileA", 7 }, { "WriteFile", 5 }, { "CloseHandle", 1 },
     { "GetLastError", 0 }, { "MultiByteToWideChar", 6 }, { "GetFileAttributesExA", 3 },
+    { "DeleteFileA", 1 },
   }
   for _, entry in ipairs(functions) do
     local name, argumentCount = entry[1], entry[2]
@@ -251,6 +252,27 @@ function winfiles.fileStamp(path)
   end
   core.deallocate(data)
   return stamp
+end
+
+---The last write time of the file `path` as a number (larger = newer), or nil when it is missing.
+function winfiles.fileTime(path)
+  initialize()
+  local data = core.allocate(36, true)
+  local time = nil
+  if win.GetFileAttributesExA(setPath(winfiles.absolute(path)), 0, data) ~= 0 then
+    time = (core.readInteger(data + 24) & 0xFFFFFFFF) * 4294967296 + (core.readInteger(data + 20) & 0xFFFFFFFF)
+  end
+  core.deallocate(data)
+  return time
+end
+
+---Deletes the file `path`. True when it is gone afterwards.
+function winfiles.deleteFile(path)
+  initialize()
+  if win.DeleteFileA(setPath(winfiles.absolute(path))) ~= 0 then
+    return true
+  end
+  return winfiles.fileStamp(path) == nil
 end
 
 ---Writes `contents` (any bytes) to the file `path`, replacing it.

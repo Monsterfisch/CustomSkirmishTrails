@@ -1,0 +1,53 @@
+{
+  "format": 1,
+  "map_name": "Fury_Bay",
+  "mission_name": "Fury_Bay",
+  "text_description": [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+  ],
+  "advantage": "ai_small",
+  "start_mode": "normal",
+  "players": [
+    {
+      "start_position": 4,
+      "team": 1,
+      "aiv_type": 0
+    },
+    {
+      "ai": "SK_WAZIR",
+      "start_position": 2,
+      "team": 2,
+      "aiv_type": 4
+    },
+    {
+      "ai": "SK_NIZAR",
+      "start_position": 3,
+      "team": 2,
+      "aiv_type": 4
+    },
+    {
+      "ai": "SK_EMIR",
+      "start_position": 1,
+      "team": 2,
+      "aiv_type": 4
+    }
+  ],
+  "producible": {},
+  "recruitable": {},
+  "resources": {},
+  "tradeable": {},
+  "extra": {
+    "team5": "2",
+    "player6": "",
+    "aiv_type6": "5",
+    "aiv_type7": "2",
+    "aiv_type8": "3"
+  }
+}

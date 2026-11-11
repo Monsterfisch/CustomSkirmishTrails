@@ -1,0 +1,52 @@
+{
+  "format": 1,
+  "map_name": "The Dunes",
+  "mission_name": "Death in the Dunes",
+  "text_description": [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+  ],
+  "advantage": "neutral",
+  "start_mode": "deathmatch",
+  "players": [
+    {
+      "start_position": 3,
+      "team": 0,
+      "aiv_type": 0
+    },
+    {
+      "ai": "SK_SULTAN",
+      "start_position": 2,
+      "team": 1,
+      "aiv_type": 1
+    },
+    {
+      "ai": "SK_SULTAN",
+      "start_position": 5,
+      "team": 1,
+      "aiv_type": 2
+    },
+    {
+      "ai": "SK_SULTAN",
+      "start_position": 6,
+      "team": 1,
+      "aiv_type": 3
+    },
+    {
+      "ai": "SK_SULTAN",
+      "start_position": 1,
+      "team": 1,
+      "aiv_type": 4
+    }
+  ],
+  "producible": {},
+  "recruitable": {},
+  "resources": {},
+  "tradeable": {}
+}

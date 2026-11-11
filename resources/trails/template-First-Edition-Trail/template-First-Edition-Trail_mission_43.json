@@ -1,0 +1,70 @@
+{
+  "format": 1,
+  "map_name": "The river",
+  "mission_name": "The Desert Warriors",
+  "text_description": [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+  ],
+  "advantage": "neutral",
+  "start_mode": "deathmatch",
+  "players": [
+    {
+      "start_position": 4,
+      "team": 0,
+      "aiv_type": 0
+    },
+    {
+      "ai": "SK_RAT",
+      "start_position": 2,
+      "team": 1,
+      "aiv_type": 0
+    },
+    {
+      "ai": "SK_RAT",
+      "start_position": 3,
+      "team": 1,
+      "aiv_type": 1
+    },
+    {
+      "ai": "SK_RAT",
+      "start_position": 1,
+      "team": 1,
+      "aiv_type": 2
+    },
+    {
+      "ai": "SK_RAT",
+      "start_position": 5,
+      "team": 1,
+      "aiv_type": 3
+    },
+    {
+      "ai": "SK_RAT",
+      "start_position": 6,
+      "team": 1,
+      "aiv_type": 4
+    },
+    {
+      "ai": "SK_RAT",
+      "start_position": 7,
+      "team": 1,
+      "aiv_type": 5
+    },
+    {
+      "ai": "SK_RAT",
+      "start_position": 8,
+      "team": 1,
+      "aiv_type": 6
+    }
+  ],
+  "producible": {},
+  "recruitable": {},
+  "resources": {},
+  "tradeable": {}
+}

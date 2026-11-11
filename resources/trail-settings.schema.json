@@ -18,42 +18,12 @@
       ]
     },
     "trail_title": {
-      "description": "The trail's title under its button in the skirmish menu. Either one text for every language, or an object of texts per game language (\"english\", \"german\", ...) with \"default\" for every other language, like trail_csv_files.",
-      "oneOf": [
-        {
-          "type": "string"
-        },
-        {
-          "type": "object",
-          "properties": {
-            "default": {
-              "type": "string"
-            }
-          },
-          "additionalProperties": {
-            "type": "string"
-          }
-        }
-      ]
+      "description": "The trail's title under its button in the skirmish menu. A language file (trail_text_files) can give its own.",
+      "type": "string"
     },
     "trail_summary": {
-      "description": "The short description under the title in the skirmish menu. Longer than 540 pixels, it wraps into a second line. Either one text for every language, or an object of texts per game language (\"english\", \"german\", ...) with \"default\" for every other language, like trail_csv_files.",
-      "oneOf": [
-        {
-          "type": "string"
-        },
-        {
-          "type": "object",
-          "properties": {
-            "default": {
-              "type": "string"
-            }
-          },
-          "additionalProperties": {
-            "type": "string"
-          }
-        }
-      ]
+      "description": "The short description under the title in the skirmish menu. Longer than 540 pixels, it wraps into a second line. A language file (trail_text_files) can give its own.",
+      "type": "string"
     },
     "starting_year": {
       "description": "The year the trail's first mission starts in. The game uses 1100 for the first trail and 1130 for the Warchest and the Extreme trail.",
@@ -106,20 +76,32 @@
         "additionalProperties": false
       }
     },
-    "trail_csv_files": {
-      "description": "The trail's csv file per game language, for example \"english\", \"german\", \"french\". \"default\" is used for every other language. When this is given, it takes the place of the csv files set in the UCP GUI.",
+    "trail_missions": {
+      "description": "The trail's mission data: a csv file (<base_name>.csv) and a folder of mission JSON files (<base_name>/<name>_mission_NN.json, see mission.schema.json), kept in step at every game start. The number of missions read is the number of trail_mission_positions (if given).",
       "type": "object",
       "properties": {
-        "default": {
+        "base_name": {
+          "description": "Path of the csv file without .csv, relative to this file. Also the mission folder.",
           "type": "string"
+        },
+        "data_mode": {
+          "description": "Which one is the ground truth. \"csv\": the game loads the csv and writes the mission files from it. \"json_folder\": the mission files are written into the csv, which the game then loads. \"automatic\": per mission, whichever was edited last wins. Before files are changed, the previous csv is kept as <csv>.bak and the previous mission files in <folder>/.bak. Nothing is done when no file changed since the last start.",
+          "type": "string",
+          "enum": [
+            "csv",
+            "json_folder",
+            "automatic"
+          ],
+          "default": "csv"
         }
       },
-      "additionalProperties": {
-        "type": "string"
-      }
+      "required": [
+        "base_name"
+      ],
+      "additionalProperties": false
     },
     "trail_text_files": {
-      "description": "Texts per game language, so the csv file holds only one (the default) set of texts. Either a folder with one <language>.json file per language (english.json, german.json, ...), or an object of languages to files. A language file has \"trail_title\", \"trail_summary\" and \"missions\": { \"<mission number or mission_id>\": { \"mission_name\": ..., \"text_description_line_01\": ..., \"player2_name\": ... } }. Texts it does not have keep the csv's text. \"Make language text files\" in the GUI's CSV data panel writes these files from language csv files.",
+      "description": "Texts per game language: a folder with one <language>.json file per language (english.json, german.json, ...), or an object of languages to files. A language file has \"trail_title\", \"trail_summary\" and \"missions\": { \"<mission number>\": { \"mission_name\": ..., \"text_description_line_01\": ..., \"player2_name\": ... } }. Texts it does not have keep the mission data's text. With trail_missions, <folder>/_template.json is written with the texts of the mission data, as a starting point for translators.",
       "oneOf": [
         {
           "type": "string"

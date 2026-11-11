@@ -1,0 +1,37 @@
+{
+  "format": 1,
+  "map_name": "Thasos",
+  "mission_name": "Holy Water",
+  "text_description": [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+  ],
+  "advantage": "human_small",
+  "start_mode": "normal",
+  "players": [
+    {
+      "start_position": 3,
+      "team": 1,
+      "aiv_type": 0
+    },
+    {
+      "ai": "SK_ABBOT",
+      "start_position": 4,
+      "team": 2,
+      "aiv_type": 1
+    }
+  ],
+  "producible": {},
+  "recruitable": {},
+  "resources": {},
+  "tradeable": {},
+  "extra": {
+    "player1": "SK_HUMAN"
+  }
+}

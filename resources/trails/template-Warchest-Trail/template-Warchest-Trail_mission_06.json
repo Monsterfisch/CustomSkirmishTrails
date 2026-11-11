@@ -1,0 +1,43 @@
+{
+  "format": 1,
+  "map_name": "Hidden Crater",
+  "mission_name": "Tranquil Getaway",
+  "text_description": [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+  ],
+  "advantage": "neutral",
+  "start_mode": "normal",
+  "players": [
+    {
+      "start_position": 5,
+      "team": 0,
+      "aiv_type": 0
+    },
+    {
+      "ai": "SK_ABBOT",
+      "start_position": 4,
+      "team": 1,
+      "aiv_type": 2
+    },
+    {
+      "ai": "SK_ABBOT",
+      "start_position": 2,
+      "team": 1,
+      "aiv_type": 1
+    }
+  ],
+  "producible": {},
+  "recruitable": {},
+  "resources": {},
+  "tradeable": {},
+  "extra": {
+    "player1": "SK_HUMAN"
+  }
+}

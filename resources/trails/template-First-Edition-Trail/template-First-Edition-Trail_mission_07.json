@@ -1,0 +1,40 @@
+{
+  "format": 1,
+  "map_name": "Tyre",
+  "mission_name": "Greek Fire",
+  "text_description": [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+  ],
+  "advantage": "ai_small",
+  "start_mode": "normal",
+  "players": [
+    {
+      "start_position": 2,
+      "team": 1,
+      "aiv_type": 0
+    },
+    {
+      "ai": "SK_CALIPH",
+      "start_position": 4,
+      "team": 2,
+      "aiv_type": 0
+    },
+    {
+      "ai": "SK_CALIPH",
+      "start_position": 5,
+      "team": 2,
+      "aiv_type": 0
+    }
+  ],
+  "producible": {},
+  "recruitable": {},
+  "resources": {},
+  "tradeable": {}
+}

@@ -1,0 +1,46 @@
+{
+  "format": 1,
+  "map_name": "Upwards Alliance",
+  "mission_name": "Eye of the Camel",
+  "text_description": [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+  ],
+  "advantage": "ai_large",
+  "start_mode": "crusader",
+  "players": [
+    {
+      "start_position": 3,
+      "team": 1,
+      "aiv_type": 0
+    },
+    {
+      "ai": "SK_RICHARD",
+      "start_position": 4,
+      "team": 1,
+      "aiv_type": 6
+    },
+    {
+      "ai": "SK_SALADIN",
+      "start_position": 1,
+      "team": 2,
+      "aiv_type": 4
+    },
+    {
+      "ai": "SK_SULTAN",
+      "start_position": 2,
+      "team": 2,
+      "aiv_type": 5
+    }
+  ],
+  "producible": {},
+  "recruitable": {},
+  "resources": {},
+  "tradeable": {}
+}

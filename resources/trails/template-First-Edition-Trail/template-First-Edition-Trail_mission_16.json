@@ -1,0 +1,40 @@
+{
+  "format": 1,
+  "map_name": "A Friend Indeed",
+  "mission_name": "The Desert Hunters",
+  "text_description": [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+  ],
+  "advantage": "ai_small",
+  "start_mode": "normal",
+  "players": [
+    {
+      "start_position": 2,
+      "team": 0,
+      "aiv_type": 0
+    },
+    {
+      "ai": "SK_SALADIN",
+      "start_position": 6,
+      "team": 1,
+      "aiv_type": 3
+    },
+    {
+      "ai": "SK_SALADIN",
+      "start_position": 4,
+      "team": 1,
+      "aiv_type": 4
+    }
+  ],
+  "producible": {},
+  "recruitable": {},
+  "resources": {},
+  "tradeable": {}
+}

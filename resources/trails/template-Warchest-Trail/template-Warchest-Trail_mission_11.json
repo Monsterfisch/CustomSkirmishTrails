@@ -1,0 +1,37 @@
+{
+  "format": 1,
+  "map_name": "Dunes of Nicaea",
+  "mission_name": "Holy Hole",
+  "text_description": [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+  ],
+  "advantage": "ai_small",
+  "start_mode": "deathmatch",
+  "players": [
+    {
+      "start_position": 6,
+      "team": 1,
+      "aiv_type": 0
+    },
+    {
+      "ai": "SK_NIZAR",
+      "start_position": 2,
+      "team": 2,
+      "aiv_type": 3
+    }
+  ],
+  "producible": {},
+  "recruitable": {},
+  "resources": {},
+  "tradeable": {},
+  "extra": {
+    "player1": "SK_HUMAN"
+  }
+}

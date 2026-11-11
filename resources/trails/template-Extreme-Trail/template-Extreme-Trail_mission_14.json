@@ -1,0 +1,52 @@
+{
+  "format": 1,
+  "map_name": "Spider_Island",
+  "mission_name": "Spider_Island",
+  "text_description": [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+  ],
+  "advantage": "neutral",
+  "start_mode": "deathmatch",
+  "players": [
+    {
+      "start_position": 1,
+      "team": 1,
+      "aiv_type": 0
+    },
+    {
+      "ai": "SK_EMIR",
+      "start_position": 2,
+      "team": 2,
+      "aiv_type": 2
+    },
+    {
+      "ai": "SK_NIZAR",
+      "start_position": 3,
+      "team": 2,
+      "aiv_type": 4
+    },
+    {
+      "ai": "SK_RICHARD",
+      "start_position": 4,
+      "team": 2,
+      "aiv_type": 0
+    }
+  ],
+  "producible": {},
+  "recruitable": {},
+  "resources": {},
+  "tradeable": {},
+  "extra": {
+    "aiv_type5": "2",
+    "aiv_type6": "3",
+    "aiv_type7": "1",
+    "aiv_type8": "5"
+  }
+}

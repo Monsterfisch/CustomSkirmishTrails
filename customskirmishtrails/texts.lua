@@ -5,16 +5,15 @@
 --     "trail_title": "...", "trail_summary": "...",
 --     "missions": {
 --       "1": { "mission_name": "...", "text_description_line_01": "...", "player2_name": "..." },
---       "coast": { ... }
+--       "2": { ... }
 --     }
 --   }
 --
--- A mission is found by its mission_id column when it has one, otherwise by its number (1, 2,
--- ...). A text the language file does not have keeps the default text from the csv.
+-- A mission is found by its number (1, 2, ...). A text the language file does not have keeps
+-- the default text from the csv.
 
 local settingsModule = require("customskirmishtrails.settings")
 local conversion = require("customskirmishtrails.conversion")
-local winfiles = require("customskirmishtrails.winfiles")
 
 local texts = {}
 
@@ -37,12 +36,8 @@ function texts.setStrict(value)
   strict = value == true
 end
 
----The key of a mission in a language file: its mission_id, or its number.
-function texts.missionKey(entry, index)
-  local id = entry ~= nil and entry.mission_id or nil
-  if type(id) == "string" and id ~= "" then
-    return id
-  end
+---The key of a mission in a language file: its number.
+function texts.missionKey(_, index)
   return tostring(index)
 end
 
@@ -152,29 +147,7 @@ function texts.apply(languageTexts, entries)
   end
 end
 
--- Making language files from language csv files ----------------------------------------------
-
-local function readTable(path)
-  local text, err = settingsModule.readText(path)
-  if text == nil then
-    return nil, string.format("cannot read %s (%s)", path, tostring(err))
-  end
-  local rows = conversion.parseCsv(text)
-  if #rows < 1 then
-    return nil, path .. " is empty"
-  end
-  local header, entries = rows[1], {}
-  for index = 2, #rows do
-    local entry = {}
-    for column, key in ipairs(header) do
-      if key ~= "" then
-        entry[key] = rows[index][column] or ""
-      end
-    end
-    table.insert(entries, entry)
-  end
-  return entries
-end
+-- Writing language files -------------------------------------------------------------------
 
 ---The JSON text of a language file with the texts of `entries` (only non-empty texts).
 function texts.format(entries, title, summary)
@@ -203,58 +176,6 @@ function texts.format(entries, title, summary)
   table.insert(lines, "  }")
   table.insert(lines, "}")
   return table.concat(lines, "\n") .. "\n"
-end
-
----Turns language csv files into language files next to the default csv, in `<folder>texts/`.
----`languageCsvs` maps languages to csv files. A language csv whose gameplay columns differ from
----the default csv is reported and skipped. Also writes _template.json with the default texts.
-function texts.makeFromCsvs(defaultCsv, languageCsvs)
-  local results = {}
-  local defaultEntries, err = readTable(defaultCsv)
-  if defaultEntries == nil then
-    return { err }
-  end
-  local folder = settingsModule.directoryOf(defaultCsv) .. "texts"
-  local made, folderError = winfiles.createDirectory(folder)
-  if not made then
-    return { folderError }
-  end
-  local ok, writeError = winfiles.writeFile(folder .. "/_template.json", texts.format(defaultEntries))
-  table.insert(results, ok and string.format("wrote %s/_template.json (the default texts, for translators)", folder)
-    or writeError)
-
-  local languages = {}
-  for language in pairs(languageCsvs) do
-    table.insert(languages, language)
-  end
-  table.sort(languages)
-  for _, language in ipairs(languages) do
-    local csvPath = languageCsvs[language]
-    if csvPath ~= defaultCsv then
-      local differences = conversion.compareCsv(defaultCsv, csvPath)
-      if #differences > 0 then
-        table.insert(results, string.format("%s was not turned into a language file: its gameplay data differs "
-          .. "from %s (%d differences; turn on strict mode to see them). Decide which values are right first.",
-          csvPath, defaultCsv, #differences))
-      else
-        local entries, readError = readTable(csvPath)
-        if entries == nil then
-          table.insert(results, readError)
-        else
-          -- keep the mission keys of the default csv (mission_id lives there)
-          for index, entry in ipairs(entries) do
-            entry.mission_id = defaultEntries[index] and defaultEntries[index].mission_id or nil
-          end
-          local file = string.format("%s/%s.json", folder, language)
-          local written, fileError = winfiles.writeFile(file, texts.format(entries))
-          table.insert(results, written and string.format("wrote %s from %s", file, csvPath) or fileError)
-        end
-      end
-    end
-  end
-  table.insert(results, string.format("to use them, set \"trail_text_files\" in the trail settings file to the "
-    .. "folder %s/ (relative to the settings file) and remove the language csv files", folder))
-  return results
 end
 
 return texts

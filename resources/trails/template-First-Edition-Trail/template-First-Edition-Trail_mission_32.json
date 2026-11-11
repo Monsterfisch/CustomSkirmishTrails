@@ -1,0 +1,58 @@
+{
+  "format": 1,
+  "map_name": "Marshy Mayhem",
+  "mission_name": "The Plains of Atum",
+  "text_description": [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+  ],
+  "advantage": "ai_large",
+  "start_mode": "normal",
+  "players": [
+    {
+      "start_position": 5,
+      "team": 0,
+      "aiv_type": 0
+    },
+    {
+      "ai": "SK_SULTAN",
+      "start_position": 8,
+      "team": 0,
+      "aiv_type": 3
+    },
+    {
+      "ai": "SK_SULTAN",
+      "start_position": 7,
+      "team": 0,
+      "aiv_type": 4
+    },
+    {
+      "ai": "SK_SALADIN",
+      "start_position": 4,
+      "team": 0,
+      "aiv_type": 5
+    },
+    {
+      "ai": "SK_CALIPH",
+      "start_position": 2,
+      "team": 0,
+      "aiv_type": 4
+    },
+    {
+      "ai": "SK_CALIPH",
+      "start_position": 3,
+      "team": 0,
+      "aiv_type": 3
+    }
+  ],
+  "producible": {},
+  "recruitable": {},
+  "resources": {},
+  "tradeable": {}
+}

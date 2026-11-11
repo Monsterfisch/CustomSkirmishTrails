@@ -1,0 +1,58 @@
+{
+  "format": 1,
+  "map_name": "The Guardians",
+  "mission_name": "A Barren Land",
+  "text_description": [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+  ],
+  "advantage": "human_small",
+  "start_mode": "normal",
+  "players": [
+    {
+      "start_position": 2,
+      "team": 0,
+      "aiv_type": 0
+    },
+    {
+      "ai": "SK_SNAKE",
+      "start_position": 4,
+      "team": 1,
+      "aiv_type": 0
+    },
+    {
+      "ai": "SK_SNAKE",
+      "start_position": 7,
+      "team": 1,
+      "aiv_type": 1
+    },
+    {
+      "ai": "SK_SNAKE",
+      "start_position": 6,
+      "team": 1,
+      "aiv_type": 2
+    },
+    {
+      "ai": "SK_SNAKE",
+      "start_position": 5,
+      "team": 1,
+      "aiv_type": 3
+    },
+    {
+      "ai": "SK_SNAKE",
+      "start_position": 3,
+      "team": 1,
+      "aiv_type": 4
+    }
+  ],
+  "producible": {},
+  "recruitable": {},
+  "resources": {},
+  "tradeable": {}
+}

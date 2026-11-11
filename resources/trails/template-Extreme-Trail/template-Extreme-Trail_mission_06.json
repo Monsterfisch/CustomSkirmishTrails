@@ -1,0 +1,51 @@
+{
+  "format": 1,
+  "map_name": "Phoenix",
+  "mission_name": "Phoenix",
+  "text_description": [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+  ],
+  "advantage": "ai_large",
+  "start_mode": "deathmatch",
+  "players": [
+    {
+      "start_position": 1,
+      "team": 0,
+      "aiv_type": 7
+    },
+    {
+      "ai": "SK_CALIPH",
+      "start_position": 2,
+      "team": 1,
+      "aiv_type": 0
+    },
+    {
+      "ai": "SK_PIG",
+      "start_position": 3,
+      "team": 1,
+      "aiv_type": 1
+    },
+    {
+      "ai": "SK_RAT",
+      "start_position": 4,
+      "team": 1,
+      "aiv_type": 0
+    }
+  ],
+  "producible": {},
+  "recruitable": {},
+  "resources": {},
+  "tradeable": {},
+  "extra": {
+    "aiv_type5": "1",
+    "aiv_type7": "3",
+    "aiv_type8": "2"
+  }
+}

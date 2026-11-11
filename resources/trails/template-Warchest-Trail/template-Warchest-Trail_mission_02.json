@@ -1,0 +1,37 @@
+{
+  "format": 1,
+  "map_name": "Caesarea Swampland",
+  "mission_name": "Muddy Boots",
+  "text_description": [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+  ],
+  "advantage": "human_small",
+  "start_mode": "normal",
+  "players": [
+    {
+      "start_position": 2,
+      "team": 1,
+      "aiv_type": 0
+    },
+    {
+      "ai": "SK_MARSHAL",
+      "start_position": 1,
+      "team": 2,
+      "aiv_type": 8
+    }
+  ],
+  "producible": {},
+  "recruitable": {},
+  "resources": {},
+  "tradeable": {},
+  "extra": {
+    "player1": "SK_HUMAN"
+  }
+}

@@ -1,0 +1,52 @@
+{
+  "format": 1,
+  "map_name": "The Bulls eye",
+  "mission_name": "The Forgotten",
+  "text_description": [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+  ],
+  "advantage": "ai_small",
+  "start_mode": "normal",
+  "players": [
+    {
+      "start_position": 5,
+      "team": 0,
+      "aiv_type": 0
+    },
+    {
+      "ai": "SK_RAT",
+      "start_position": 7,
+      "team": 1,
+      "aiv_type": 4
+    },
+    {
+      "ai": "SK_SNAKE",
+      "start_position": 1,
+      "team": 1,
+      "aiv_type": 4
+    },
+    {
+      "ai": "SK_PIG",
+      "start_position": 4,
+      "team": 1,
+      "aiv_type": 4
+    },
+    {
+      "ai": "SK_WOLF",
+      "start_position": 8,
+      "team": 1,
+      "aiv_type": 4
+    }
+  ],
+  "producible": {},
+  "recruitable": {},
+  "resources": {},
+  "tradeable": {}
+}

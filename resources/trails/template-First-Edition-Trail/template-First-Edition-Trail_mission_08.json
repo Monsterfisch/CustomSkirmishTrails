@@ -1,0 +1,52 @@
+{
+  "format": 1,
+  "map_name": "The Bulls eye",
+  "mission_name": "Sands Of Time",
+  "text_description": [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+  ],
+  "advantage": "human_small",
+  "start_mode": "normal",
+  "players": [
+    {
+      "start_position": 1,
+      "team": 0,
+      "aiv_type": 0
+    },
+    {
+      "ai": "SK_RAT",
+      "start_position": 5,
+      "team": 1,
+      "aiv_type": 0
+    },
+    {
+      "ai": "SK_RAT",
+      "start_position": 6,
+      "team": 1,
+      "aiv_type": 1
+    },
+    {
+      "ai": "SK_RAT",
+      "start_position": 4,
+      "team": 1,
+      "aiv_type": 2
+    },
+    {
+      "ai": "SK_RAT",
+      "start_position": 8,
+      "team": 1,
+      "aiv_type": 3
+    }
+  ],
+  "producible": {},
+  "recruitable": {},
+  "resources": {},
+  "tradeable": {}
+}

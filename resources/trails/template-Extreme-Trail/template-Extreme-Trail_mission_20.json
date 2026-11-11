@@ -1,0 +1,57 @@
+{
+  "format": 1,
+  "map_name": "Ultimate_Victory",
+  "mission_name": "Ultimate_Victory",
+  "text_description": [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+  ],
+  "advantage": "human_small",
+  "start_mode": "normal",
+  "players": [
+    {
+      "start_position": 1,
+      "team": 0,
+      "aiv_type": 7
+    },
+    {
+      "ai": "SK_SALADIN",
+      "start_position": 2,
+      "team": 1,
+      "aiv_type": 5
+    },
+    {
+      "ai": "SK_SALADIN",
+      "start_position": 3,
+      "team": 1,
+      "aiv_type": 2
+    },
+    {
+      "ai": "SK_RICHARD",
+      "start_position": 4,
+      "team": 1,
+      "aiv_type": 2
+    },
+    {
+      "ai": "SK_RICHARD",
+      "start_position": 5,
+      "team": 1,
+      "aiv_type": 2
+    }
+  ],
+  "producible": {},
+  "recruitable": {},
+  "resources": {},
+  "tradeable": {},
+  "extra": {
+    "aiv_type6": "4",
+    "aiv_type7": "1",
+    "aiv_type8": "5"
+  }
+}

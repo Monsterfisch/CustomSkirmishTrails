@@ -1,0 +1,57 @@
+{
+  "format": 1,
+  "map_name": "Rivers_Fork",
+  "mission_name": "Rivers_Fork",
+  "text_description": [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+  ],
+  "advantage": "ai_small",
+  "start_mode": "normal",
+  "players": [
+    {
+      "start_position": 1,
+      "team": 1,
+      "aiv_type": 5
+    },
+    {
+      "ai": "SK_PIG",
+      "start_position": 2,
+      "team": 2,
+      "aiv_type": 0
+    },
+    {
+      "ai": "SK_SHERIFF",
+      "start_position": 3,
+      "team": 2,
+      "aiv_type": 3
+    },
+    {
+      "ai": "SK_SHERIFF",
+      "start_position": 4,
+      "team": 2,
+      "aiv_type": 3
+    },
+    {
+      "ai": "SK_RAT",
+      "start_position": 5,
+      "team": 2,
+      "aiv_type": 5
+    }
+  ],
+  "producible": {},
+  "recruitable": {},
+  "resources": {},
+  "tradeable": {},
+  "extra": {
+    "aiv_type6": "3",
+    "aiv_type7": "1",
+    "aiv_type8": "1"
+  }
+}

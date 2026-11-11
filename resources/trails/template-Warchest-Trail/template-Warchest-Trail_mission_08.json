@@ -1,0 +1,55 @@
+{
+  "format": 1,
+  "map_name": "Arnon River",
+  "mission_name": "The Rapids",
+  "text_description": [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+  ],
+  "advantage": "ai_small",
+  "start_mode": "normal",
+  "players": [
+    {
+      "start_position": 1,
+      "team": 1,
+      "aiv_type": 0
+    },
+    {
+      "ai": "SK_EMIR",
+      "start_position": 6,
+      "team": 2,
+      "aiv_type": 6
+    },
+    {
+      "ai": "SK_EMIR",
+      "start_position": 5,
+      "team": 2,
+      "aiv_type": 1
+    },
+    {
+      "ai": "SK_MARSHAL",
+      "start_position": 2,
+      "team": 1,
+      "aiv_type": 3
+    },
+    {
+      "ai": "SK_WAZIR",
+      "start_position": 4,
+      "team": 2,
+      "aiv_type": 4
+    }
+  ],
+  "producible": {},
+  "recruitable": {},
+  "resources": {},
+  "tradeable": {},
+  "extra": {
+    "player1": "SK_HUMAN"
+  }
+}

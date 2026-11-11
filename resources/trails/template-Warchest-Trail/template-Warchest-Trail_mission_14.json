@@ -1,0 +1,61 @@
+{
+  "format": 1,
+  "map_name": "Wall of Iron",
+  "mission_name": "Mirage",
+  "text_description": [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+  ],
+  "advantage": "ai_large",
+  "start_mode": "normal",
+  "players": [
+    {
+      "start_position": 5,
+      "team": 2,
+      "aiv_type": 0
+    },
+    {
+      "ai": "SK_WAZIR",
+      "start_position": 3,
+      "team": 1,
+      "aiv_type": 5
+    },
+    {
+      "ai": "SK_NIZAR",
+      "start_position": 2,
+      "team": 1,
+      "aiv_type": 8
+    },
+    {
+      "ai": "SK_EMIR",
+      "start_position": 4,
+      "team": 1,
+      "aiv_type": 1
+    },
+    {
+      "ai": "SK_ABBOT",
+      "start_position": 6,
+      "team": 2,
+      "aiv_type": 4
+    },
+    {
+      "ai": "SK_MARSHAL",
+      "start_position": 7,
+      "team": 2,
+      "aiv_type": 0
+    }
+  ],
+  "producible": {},
+  "recruitable": {},
+  "resources": {},
+  "tradeable": {},
+  "extra": {
+    "player1": "SK_HUMAN"
+  }
+}

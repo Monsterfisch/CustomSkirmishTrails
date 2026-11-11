@@ -1,0 +1,46 @@
+{
+  "format": 1,
+  "map_name": "Piggy in the Middle",
+  "mission_name": "Realm Of the Camels",
+  "text_description": [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+  ],
+  "advantage": "ai_large",
+  "start_mode": "crusader",
+  "players": [
+    {
+      "start_position": 1,
+      "team": 0,
+      "aiv_type": 0
+    },
+    {
+      "ai": "SK_SULTAN",
+      "start_position": 2,
+      "team": 1,
+      "aiv_type": 2
+    },
+    {
+      "ai": "SK_SULTAN",
+      "start_position": 3,
+      "team": 1,
+      "aiv_type": 3
+    },
+    {
+      "ai": "SK_SULTAN",
+      "start_position": 4,
+      "team": 1,
+      "aiv_type": 4
+    }
+  ],
+  "producible": {},
+  "recruitable": {},
+  "resources": {},
+  "tradeable": {}
+}

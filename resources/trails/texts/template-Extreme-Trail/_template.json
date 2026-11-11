@@ -1,0 +1,64 @@
+{
+  "missions": {
+    "1": {
+      "mission_name": "Look_out"
+    },
+    "2": {
+      "mission_name": "Bird_in_flight"
+    },
+    "3": {
+      "mission_name": "Fury_Bay"
+    },
+    "4": {
+      "mission_name": "Snake_River"
+    },
+    "5": {
+      "mission_name": "Swampy_Island"
+    },
+    "6": {
+      "mission_name": "Phoenix"
+    },
+    "7": {
+      "mission_name": "Coastal_Trap"
+    },
+    "8": {
+      "mission_name": "Wazirs_Fortress"
+    },
+    "9": {
+      "mission_name": "Rivers_Fork"
+    },
+    "10": {
+      "mission_name": "Enclosure"
+    },
+    "11": {
+      "mission_name": "Wide_Open_Plain"
+    },
+    "12": {
+      "mission_name": "The_Host"
+    },
+    "13": {
+      "mission_name": "Best_Friends"
+    },
+    "14": {
+      "mission_name": "Spider_Island"
+    },
+    "15": {
+      "mission_name": "Divided"
+    },
+    "16": {
+      "mission_name": "Jealous_Neighbours"
+    },
+    "17": {
+      "mission_name": "Three_Little_Pigs"
+    },
+    "18": {
+      "mission_name": "Lionheart"
+    },
+    "19": {
+      "mission_name": "Crossroads"
+    },
+    "20": {
+      "mission_name": "Ultimate_Victory"
+    }
+  }
+}

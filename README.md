@@ -13,9 +13,9 @@ This tool is recommended to manipulate the csv files https://edit-csv.net/
 7. Specify the starting resources
 8. Disable tradeability of certain goods
 9. Mission-specific player names, the human player's lord (also for the starting troops) and skipping the human's starting troops (`player1_name` .. `player8_name`, `player1_lord`, `player1_skip_start_units`)
-10. A trail settings file per trail: title, summary, starting year, button pictures, background, mission button positions and count, csv files per game language, own names for the AI keys (`resources/trail-settings.schema.json`)
-11. Csv files per game language
-12. Export / Import CSV Data: one JSON file per mission, and back
+10. A trail settings file per trail: title, summary, starting year, button pictures, background, mission button positions and count, own names for the AI keys (resources/trail-settings.schema.json)
+11. Mission data as a csv file and/or a folder of mission JSON files (resources/mission.schema.json), kept in step at every start
+12. Language files with only the texts per game language
 
 See `locale/description-en.md` for the details.
 

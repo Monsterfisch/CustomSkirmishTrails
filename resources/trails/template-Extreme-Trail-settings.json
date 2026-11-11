@@ -1,12 +1,8 @@
 {
   "$schema": "../trail-settings.schema.json",
   "trail_type": "Extreme",
-  "trail_title": {
-    "default": ""
-  },
-  "trail_summary": {
-    "default": ""
-  },
+  "trail_title": "",
+  "trail_summary": "",
   "starting_year": 1130,
   "trail_visuals": {
     "trail_button_idle": "",
@@ -35,9 +31,11 @@
     { "x": 370, "y": 186 },
     { "x": 327, "y": 125 }
   ],
-  "trail_csv_files": {
-    "default": "template-Extreme-Trail.csv"
+  "trail_missions": {
+    "base_name": "template-Extreme-Trail",
+    "data_mode": "csv"
   },
+  "trail_text_files": "texts/template-Extreme-Trail/",
   "ai_character_mapping": {
     "SK_RAT": "SK_RAT",
     "SK_SNAKE": "SK_SNAKE",

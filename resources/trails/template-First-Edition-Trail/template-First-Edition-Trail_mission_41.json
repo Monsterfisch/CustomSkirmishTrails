@@ -1,0 +1,46 @@
+{
+  "format": 1,
+  "map_name": "Upwards Alliance",
+  "mission_name": "Thunder Hill",
+  "text_description": [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+  ],
+  "advantage": "ai_large",
+  "start_mode": "deathmatch",
+  "players": [
+    {
+      "start_position": 2,
+      "team": 0,
+      "aiv_type": 0
+    },
+    {
+      "ai": "SK_CALIPH",
+      "start_position": 1,
+      "team": 1,
+      "aiv_type": 5
+    },
+    {
+      "ai": "SK_CALIPH",
+      "start_position": 4,
+      "team": 1,
+      "aiv_type": 6
+    },
+    {
+      "ai": "SK_RICHARD",
+      "start_position": 3,
+      "team": 1,
+      "aiv_type": 7
+    }
+  ],
+  "producible": {},
+  "recruitable": {},
+  "resources": {},
+  "tradeable": {}
+}

@@ -4,7 +4,7 @@
 
 const FILE_PATH_LABELS = {
   'settings.path': 'Trail settings file',
-  'csv.path': 'Csv file (default)',
+  'csv.path': 'Csv file',
 };
 const filePathsCleared = new Set();
 let filePathsValues = {};
@@ -60,7 +60,7 @@ function renderFilePaths() {
 
   const settingsSet = filePathCurrent('settings.path') !== '';
   document.getElementById('notice').textContent = settingsSet
-    ? 'A trail settings file is set: if it has trail_csv_files, those files are used and the csv paths below and in "Csv files" are only a fallback.'
+    ? 'A trail settings file is set: if it has trail_missions, its csv file is used and the csv path below is only a fallback.'
     : '';
   document.getElementById('status').textContent = filePathsCleared.size
     ? `${filePathsCleared.size} path(s) will be cleared when you press "Save and close".`

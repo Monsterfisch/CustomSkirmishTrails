@@ -1,0 +1,37 @@
+{
+  "format": 1,
+  "map_name": "Tilos",
+  "mission_name": "Terror on Tilos",
+  "text_description": [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+  ],
+  "advantage": "neutral",
+  "start_mode": "normal",
+  "players": [
+    {
+      "start_position": 4,
+      "team": 1,
+      "aiv_type": 0
+    },
+    {
+      "ai": "SK_WAZIR",
+      "start_position": 7,
+      "team": 2,
+      "aiv_type": 2
+    }
+  ],
+  "producible": {},
+  "recruitable": {},
+  "resources": {},
+  "tradeable": {},
+  "extra": {
+    "player1": "SK_HUMAN"
+  }
+}
